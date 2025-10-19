@@ -1,5 +1,7 @@
 from binaryninja import BinaryView, log_info, PluginCommand
 
+# TODO: Make a script to copy the contents of this project to the plugins directory and restart binja (or use the reload api)
+
 # TODO: all i need to do is give the generators what they want in their own registered command in the ui.
 # TODO: To do that, i need to follow the files in here: https://github.com/noobexon1/idaXfrida/tree/master/idaXfrida/actions
 
