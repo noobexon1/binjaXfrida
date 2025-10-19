@@ -1,4 +1,4 @@
-from binaryninja import BinaryView, log_info, PluginCommand, show_message_box, MessageBoxButtonSet, MessageBoxIcon
+from binaryninja import BinaryView, log_info, PluginCommand
 
 
 def print_functions(bv: BinaryView):
