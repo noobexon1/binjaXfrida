@@ -1,4 +1,4 @@
-from generators.generators_utils import load_template, fill_template
+from binjaXfrida.generators.generators_utils import load_template, fill_template
 
 TEMPLATE_FILENAME = "modify_section_protection.js"
 
