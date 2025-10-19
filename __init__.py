@@ -1,1 +1,2 @@
-from .binjaXfrida.plugin import *
+from .binjaXfrida.binjaXfrida import register_plugin_commands
+register_plugin_commands()
