@@ -1,5 +1,7 @@
 import os
 
+from PySide6.QtWidgets import QApplication
+
 TEMPLATES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "templates")
 
 def load_template(template_filename: str) -> str:
@@ -19,3 +21,28 @@ def fill_template(template_content: str, repdata: dict) -> str:
     for key, v in repdata.items():
         s = s.replace(f"[{key}]", str(v))
     return s
+
+def copy_to_clipboard(data: str) -> bool:
+    """Copies the given data string to the system clipboard."""
+    if not data or data.startswith("// Error:"):
+        print("[binjaXfrida] Error: No valid script data generated to copy.")
+        return False
+
+    clipboard_copied = False
+    try:
+        app = QApplication.instance()
+        if not app:
+            print("[binjaXfrida] Warning: QApplication.instance() is None. Attempting to create one for clipboard.")
+            app = QApplication([])
+
+        clipboard = app.clipboard()
+        if clipboard:
+            clipboard.setText(data)
+            print("[binjaXfrida] Generated Frida script copied to clipboard!")
+            clipboard_copied = True
+        else:
+            print("[binjaXfrida] Warning: Could not get clipboard instance.")
+    except Exception as e:
+        print(f"[binjaXfrida] Error copying script to clipboard: {e}")
+
+    return clipboard_copied

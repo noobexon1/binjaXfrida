@@ -2,8 +2,8 @@ from binjaXfrida.generators.generators_utils import load_template, fill_template
 
 TEMPLATE_FILENAME = "negate_cond_branch_x86.js"
 
-def generate_negate_x86_cond_branch_script(module_name: str, relative_address: int) -> str:
-    print(f"[binjaXfrida] Generating negate cond branch script (for module: {module_name}, relative address: {relative_address})")
+def generate_negate_x86_cond_branch_snippet(module_name: str, relative_address: int) -> str:
+    print(f"[binjaXfrida] Generating negate cond branch snippet (for module: {module_name}, relative address: {relative_address})")
 
     template_str = load_template(TEMPLATE_FILENAME)
     if template_str.startswith("// Error:"):

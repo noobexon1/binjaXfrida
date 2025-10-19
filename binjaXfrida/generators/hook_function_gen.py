@@ -2,8 +2,8 @@ from binjaXfrida.generators.generators_utils import load_template, fill_template
 
 TEMPLATE_FILENAME = "hook_function.js"
 
-def generate_function_hook_script(module_name: str, function_relative_address: int, function_name: str) -> str:
-    print(f"[binjaXfrida] Generating hook script for function at: {function_relative_address} (Name: {function_name})")
+def generate_function_hook_snippet(module_name: str, function_relative_address: int, function_name: str) -> str:
+    print(f"[binjaXfrida] Generating hook snippet for function at: {function_relative_address} (Name: {function_name})")
 
     template = load_template(TEMPLATE_FILENAME)
     if template.startswith("// Error:"):
