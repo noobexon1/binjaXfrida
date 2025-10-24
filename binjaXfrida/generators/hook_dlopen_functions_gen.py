@@ -12,5 +12,5 @@ def generate_dlopen_hook_snippet(module_name: str) -> str:
     data_to_replace = {
         "MODULE_NAME_PLACEHOLDER": module_name,
     }
-    
+
     return fill_template(template, data_to_replace)
