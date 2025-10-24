@@ -1,7 +1,10 @@
 {
   "pluginmetadataversion": 2,
   "name": "binjaXfrida",
-  "type": ["helper"],
+  "type": [
+    "helper",
+    "ui"
+  ],
   "api": ["python3"],
   "description": "Binja and Frida. Better together!",
   "longdescription": "A Binary Ninja plugin designed to bridge the gap between static analysis in Binary Ninja and dynamic analysis with Frida",
