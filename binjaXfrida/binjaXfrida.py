@@ -25,7 +25,7 @@ class CommandExample2:
         for f in self.bv.functions:
             log_info(f"[binjaXfrida] {f.name} -> {f.start}")
 
-def register_plugin_commands():
+def init_plugin():
     def example_command(bv: BinaryView):
         command = CommandExample(bv)
         command.print_functions()
