@@ -1,0 +1,50 @@
+from binaryninja import BinaryView, log_warn
+
+from binjaXfrida.actions.action_framework import AddressAction
+from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
+from binjaXfrida.generators.negate_cond_branch_x86_gen import generate_negate_x86_cond_branch_snippet
+
+
+class NegateX86CondBranch(AddressAction):
+    description = "Negate cond branch instruction (x86)"
+    category_name = "Patching"
+
+    X86_COND_BRANCHES = {
+        "je", "jne", "jz", "jnz",
+        "ja", "jnbe", "jae", "jnb", "jnc",
+        "jb", "jnae", "jc", "jbe", "jna",
+        "jg", "jnle", "jge", "jnl",
+        "jl", "jnge", "jle", "jng",
+        "jo", "jno", "js", "jns",
+        "jp", "jpe", "jnp", "jpo",
+    }
+
+    @staticmethod
+    def _is_x86_cond_branch(bv: BinaryView, addr: int) -> bool:
+        try:
+            disasm = bv.get_disassembly(addr)
+            if not disasm:
+                return False
+            mnemonic = disasm.split()[0].lower()
+            return mnemonic in NegateX86CondBranch.X86_COND_BRANCHES
+        except (IndexError, Exception):
+            return False
+
+    def execute(self, bv: BinaryView, addr: int) -> None:
+        module_name = get_module_name(bv)
+
+        if not self._is_x86_cond_branch(bv, addr):
+            disasm = bv.get_disassembly(addr) or "<unknown>"
+            log_warn(
+                f"[binjaXfrida] Error: Instruction at {hex(addr)} ('{disasm}') "
+                f"is not a recognized x86 conditional branch."
+            )
+            return
+
+        relative_address = hex(addr - bv.start)
+        snippet = generate_negate_x86_cond_branch_snippet(module_name, relative_address)
+
+        if snippet and not snippet.startswith("// Error:"):
+            copy_to_clipboard(snippet)
+        else:
+            log_warn("[binjaXfrida] Error: Failed to generate script.")
