@@ -1,3 +1,5 @@
+"""Action to generate a Frida dlopen hook snippet."""
+
 from binaryninja import BinaryView, log_warn
 
 from binjaXfrida.actions.action_framework import Action
@@ -6,10 +8,16 @@ from binjaXfrida.generators.hook_dlopen_functions_gen import generate_dlopen_hoo
 
 
 class GenerateDlopenHooks(Action):
+    """Generate a Frida script that hooks dlopen-family functions."""
+
     description = "Generate dlopen hooks (Basic for Android native libs)"
     category_name = "Hooks"
 
     def execute(self, bv: BinaryView) -> None:
+        """Generate a dlopen hook snippet and copy it to the clipboard.
+
+        :param bv: The current Binary Ninja BinaryView.
+        """
         module_name = get_module_name(bv)
 
         if not module_name:

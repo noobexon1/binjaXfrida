@@ -1,3 +1,5 @@
+"""Action to generate a Frida x86 conditional branch negation snippet."""
+
 from binaryninja import BinaryView, log_warn
 
 from binjaXfrida.actions.action_framework import AddressAction
@@ -6,6 +8,8 @@ from binjaXfrida.generators.negate_cond_branch_x86_gen import generate_negate_x8
 
 
 class NegateX86CondBranch(AddressAction):
+    """Generate a Frida script that negates an x86 conditional branch."""
+
     description = "Negate cond branch instruction (x86)"
     category_name = "Patching"
 
@@ -21,16 +25,28 @@ class NegateX86CondBranch(AddressAction):
 
     @staticmethod
     def _is_x86_cond_branch(bv: BinaryView, addr: int) -> bool:
+        """Check whether the instruction at *addr* is an x86 conditional branch.
+
+        :param bv: The current Binary Ninja BinaryView.
+        :param addr: The address to inspect.
+        :return: ``True`` if the mnemonic is a recognized x86
+            conditional jump.
+        """
         try:
             disasm = bv.get_disassembly(addr)
             if not disasm:
                 return False
             mnemonic = disasm.split()[0].lower()
             return mnemonic in NegateX86CondBranch.X86_COND_BRANCHES
-        except (IndexError, Exception):
+        except Exception:
             return False
 
     def execute(self, bv: BinaryView, addr: int) -> None:
+        """Generate a branch negation snippet and copy it to the clipboard.
+
+        :param bv: The current Binary Ninja BinaryView.
+        :param addr: The address of the conditional branch instruction.
+        """
         module_name = get_module_name(bv)
 
         if not self._is_x86_cond_branch(bv, addr):

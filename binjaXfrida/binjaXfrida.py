@@ -1,3 +1,5 @@
+"""Plugin initialization and action registration for binjaXfrida."""
+
 from binaryninja import log_info
 
 from binjaXfrida.actions.action_framework import ActionManager
@@ -9,6 +11,7 @@ from binjaXfrida.actions.negate_cond_branch_x86_action import NegateX86CondBranc
 
 
 def init_plugin() -> None:
+    """Register all binjaXfrida actions with Binary Ninja."""
     manager = ActionManager()
 
     manager.register(GenerateFunctionHook())
