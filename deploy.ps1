@@ -139,8 +139,20 @@ if ($bnProcess) {
     Write-Host "[deploy] Binary Ninja is not running." -ForegroundColor Yellow
 }
 
-$bnExe = Get-ChildItem "C:\Program Files\Vector35\BinaryNinja" -Filter "binaryninja.exe" -Recurse -ErrorAction SilentlyContinue |
-    Select-Object -First 1
+$searchPaths = @(
+    "$env:LOCALAPPDATA\Programs\Vector35\BinaryNinja",
+    "C:\Program Files\Vector35\BinaryNinja",
+    "C:\Program Files (x86)\Vector35\BinaryNinja"
+)
+
+$bnExe = $null
+foreach ($dir in $searchPaths) {
+    if (Test-Path $dir) {
+        $bnExe = Get-ChildItem $dir -Filter "binaryninja.exe" -Recurse -ErrorAction SilentlyContinue |
+            Select-Object -First 1
+        if ($bnExe) { break }
+    }
+}
 
 if (-not $bnExe) {
     $bnExe = Get-Command "binaryninja" -ErrorAction SilentlyContinue
