@@ -9,8 +9,8 @@
         console.log(`[+] Negating conditional branch at ${targetAddr}`);
         console.log(`\tbefore: ${Instruction.parse(targetAddr)}`);
         Memory.patchCode(targetAddr, 4, code => {
-            const raw = Memory.readU32(targetAddr);
-            Memory.writeU32(code, raw ^ 1); // XOR with 1 in AArch64 negates conditional branching.
+            const raw = targetAddr.readU32();
+            code.writeU32(raw ^ 1); // XOR with 1 in AArch64 negates conditional branching.
         });
         console.log(`\tafter: ${Instruction.parse(targetAddr)}`);
     } else {

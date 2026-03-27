@@ -11,9 +11,9 @@
 
         let patchPtr;
 
-        const firstByte = Memory.readU8(targetAddr);
+        const firstByte = targetAddr.readU8();
         if (firstByte === 0x0F) {
-            const secondByte = Memory.readU8(targetAddr.add(1));
+            const secondByte = targetAddr.add(1).readU8();
             if ((secondByte & 0xF0) === 0x80) {
                 patchPtr = targetAddr.add(1);
             }
@@ -23,8 +23,8 @@
 
         if (patchPtr) {
             Memory.patchCode(patchPtr, 1, code => {
-                const raw = Memory.readU8(patchPtr);
-                Memory.writeU8(code, raw ^ 1);
+                const raw = patchPtr.readU8();
+                code.writeU8(raw ^ 1);
             })
         }
 
