@@ -9,7 +9,7 @@ def read_template(template_filename: str) -> str:
         return f.read()
 
 def fill_template(template: str, data_to_replace: dict) -> str:
-    """Replaces placeholders in a template string with values from repdata."""
+    """Replaces placeholders in a template string with values from data_to_replace."""
     for placeholder, value in data_to_replace.items():
         template = template.replace(f"[{placeholder}]", str(value))
     return template
