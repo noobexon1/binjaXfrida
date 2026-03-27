@@ -79,7 +79,7 @@ if (-not (Test-Path $TargetDir)) {
     Abort "Failed to create target directory: $TargetDir"
 }
 
-$contents = Get-ChildItem -Path $TargetDir -Force
+$contents = @(Get-ChildItem -Path $TargetDir -Force)
 if ($contents.Count -ne 0) {
     Abort "Target directory is not empty after creation: $TargetDir"
 }
