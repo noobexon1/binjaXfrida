@@ -41,7 +41,7 @@ binjaXfrida/
 ├── pyproject.toml                     # Python project metadata
 ├── LICENSE                            # MIT license
 ├── package.json                       # Dev dependency (@types/frida-gum)
-├── deploy.ps1                         # Dev helper: deploy & restart BN
+├── install.ps1                        # Dev helper: install & restart BN
 ├── actions/
 │   ├── __init__.py
 │   ├── action_framework.py            # Action / ActionManager base classes

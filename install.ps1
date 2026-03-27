@@ -21,7 +21,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 function Abort([string]$Message) {
-    Write-Host "[deploy] FATAL: $Message" -ForegroundColor Red
+    Write-Host "[install] FATAL: $Message" -ForegroundColor Red
     exit 1
 }
 
@@ -30,8 +30,8 @@ $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $PluginName = "binjaXfrida"
 $TargetDir = Join-Path $BinjaPluginsDir $PluginName
 
-Write-Host "[deploy] Source:  $ScriptDir" -ForegroundColor Cyan
-Write-Host "[deploy] Target:  $TargetDir" -ForegroundColor Cyan
+Write-Host "[install] Source:  $ScriptDir" -ForegroundColor Cyan
+Write-Host "[install] Target:  $TargetDir" -ForegroundColor Cyan
 
 # --- Validate source directory ---
 if (-not (Test-Path $ScriptDir)) {
@@ -60,19 +60,19 @@ foreach ($item in $items) {
         Abort "Required item '$item' not found at: $src"
     }
 }
-Write-Host "[deploy] All required source items verified." -ForegroundColor Green
+Write-Host "[install] All required source items verified." -ForegroundColor Green
 
 # --- Clean previous install ---
 if (Test-Path $TargetDir) {
-    Write-Host "[deploy] Removing existing plugin folder..." -ForegroundColor Yellow
+    Write-Host "[install] Removing existing plugin folder..." -ForegroundColor Yellow
     Remove-Item -Recurse -Force $TargetDir
 
     if (Test-Path $TargetDir) {
         Abort "Failed to remove existing plugin folder: $TargetDir"
     }
-    Write-Host "[deploy] Existing folder removed." -ForegroundColor Green
+    Write-Host "[install] Existing folder removed." -ForegroundColor Green
 } else {
-    Write-Host "[deploy] No existing plugin folder found (clean install)." -ForegroundColor Green
+    Write-Host "[install] No existing plugin folder found (clean install)." -ForegroundColor Green
 }
 
 # --- Create fresh target directory ---
@@ -86,7 +86,7 @@ $contents = @(Get-ChildItem -Path $TargetDir -Force)
 if ($contents.Count -ne 0) {
     Abort "Target directory is not empty after creation: $TargetDir"
 }
-Write-Host "[deploy] Target directory created and verified empty." -ForegroundColor Green
+Write-Host "[install] Target directory created and verified empty." -ForegroundColor Green
 
 # --- Copy items ---
 foreach ($item in $items) {
@@ -102,13 +102,13 @@ foreach ($item in $items) {
     if (-not (Test-Path $dst)) {
         Abort "Failed to copy '$item' to: $dst"
     }
-    Write-Host "[deploy] Copied $item" -ForegroundColor Green
+    Write-Host "[install] Copied $item" -ForegroundColor Green
 }
 
 # --- Remove __pycache__ directories from the copy ---
 Get-ChildItem -Path $TargetDir -Recurse -Directory -Filter "__pycache__" |
     ForEach-Object {
-        Write-Host "[deploy] Removing __pycache__: $($_.FullName)" -ForegroundColor Yellow
+        Write-Host "[install] Removing __pycache__: $($_.FullName)" -ForegroundColor Yellow
         Remove-Item -Recurse -Force $_.FullName
 
         if (Test-Path $_.FullName) {
@@ -116,17 +116,17 @@ Get-ChildItem -Path $TargetDir -Recurse -Directory -Filter "__pycache__" |
         }
     }
 
-Write-Host "[deploy] Plugin deployed successfully!" -ForegroundColor Green
+Write-Host "[install] Plugin deployed successfully!" -ForegroundColor Green
 
 # --- Restart Binary Ninja ---
 if ($NoRestart) {
-    Write-Host "[deploy] Skipping Binary Ninja restart (-NoRestart)." -ForegroundColor Yellow
+    Write-Host "[install] Skipping Binary Ninja restart (-NoRestart)." -ForegroundColor Yellow
     return
 }
 
 $bnProcess = Get-Process -Name "binaryninja" -ErrorAction SilentlyContinue
 if ($bnProcess) {
-    Write-Host "[deploy] Stopping Binary Ninja (PID: $($bnProcess.Id))..." -ForegroundColor Yellow
+    Write-Host "[install] Stopping Binary Ninja (PID: $($bnProcess.Id))..." -ForegroundColor Yellow
     $bnProcess | Stop-Process -Force
     Start-Sleep -Seconds 2
 
@@ -134,9 +134,9 @@ if ($bnProcess) {
     if ($stillRunning) {
         Abort "Failed to stop Binary Ninja (PID: $($stillRunning.Id))."
     }
-    Write-Host "[deploy] Binary Ninja stopped." -ForegroundColor Green
+    Write-Host "[install] Binary Ninja stopped." -ForegroundColor Green
 } else {
-    Write-Host "[deploy] Binary Ninja is not running." -ForegroundColor Yellow
+    Write-Host "[install] Binary Ninja is not running." -ForegroundColor Yellow
 }
 
 $searchPaths = @(
@@ -160,8 +160,8 @@ if (-not $bnExe) {
 
 if ($bnExe) {
     $exePath = if ($bnExe -is [System.IO.FileInfo]) { $bnExe.FullName } else { $bnExe.Source }
-    Write-Host "[deploy] Starting Binary Ninja: $exePath" -ForegroundColor Cyan
+    Write-Host "[install] Starting Binary Ninja: $exePath" -ForegroundColor Cyan
     Start-Process $exePath
 } else {
-    Write-Host "[deploy] Could not locate binaryninja.exe. Please start it manually." -ForegroundColor Yellow
+    Write-Host "[install] Could not locate binaryninja.exe. Please start it manually." -ForegroundColor Yellow
 }
