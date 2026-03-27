@@ -1,6 +1,0 @@
-[project]
-name = "binjaxfrida"
-version = "0.1.0"
-description = "A Binary Ninja plugin designed to bridge the gap between static analysis in Binary Ninja and dynamic analysis with Frida"
-requires-python = ">=3.13"
-dependencies = []
