@@ -35,37 +35,36 @@ Inspired by [idaXfrida](https://github.com/noobexon1/idaXfrida).
 
 ```
 binjaXfrida/
-├── __init__.py                           # Plugin entry point
-├── plugin.json                           # Binary Ninja plugin metadata
-├── pyproject.toml                        # Python project metadata
-├── LICENSE                               # MIT license
-├── package.json                          # Dev dependency (@types/frida-gum)
-└── binjaXfrida/
-    ├── __init__.py
-    ├── binjaXfrida.py                    # Plugin init & action registration
-    ├── actions/
-    │   ├── __init__.py
-    │   ├── action_framework.py           # Action / ActionManager base classes
-    │   ├── action_utils.py               # BinaryView helpers & clipboard
-    │   ├── hook_function_action.py
-    │   ├── hook_dlopen_functions_action.py
-    │   ├── modify_section_protection_action.py
-    │   ├── negate_cond_branch_arm64_action.py
-    │   └── negate_cond_branch_x86_action.py
-    ├── generators/
-    │   ├── __init__.py                   # Re-exports all generators
-    │   ├── generators_utils.py           # Template loading & placeholder filling
-    │   ├── hook_function_gen.py
-    │   ├── hook_dlopen_functions_gen.py
-    │   ├── modify_section_protection_gen.py
-    │   ├── negate_cond_branch_arm64_gen.py
-    │   └── negate_cond_branch_x86_gen.py
-    └── templates/
-        ├── hook_function.js
-        ├── hook_dlopen_functions.js
-        ├── modify_section_protection.js
-        ├── negate_cond_branch_arm64.js
-        └── negate_cond_branch_x86.js
+├── __init__.py                        # Plugin entry point
+├── plugin.py                          # Plugin init & action registration
+├── plugin.json                        # Binary Ninja plugin metadata
+├── pyproject.toml                     # Python project metadata
+├── LICENSE                            # MIT license
+├── package.json                       # Dev dependency (@types/frida-gum)
+├── deploy.ps1                         # Dev helper: deploy & restart BN
+├── actions/
+│   ├── __init__.py
+│   ├── action_framework.py            # Action / ActionManager base classes
+│   ├── action_utils.py                # BinaryView helpers & clipboard
+│   ├── hook_function_action.py
+│   ├── hook_dlopen_functions_action.py
+│   ├── modify_section_protection_action.py
+│   ├── negate_cond_branch_arm64_action.py
+│   └── negate_cond_branch_x86_action.py
+├── generators/
+│   ├── __init__.py                    # Re-exports all generators
+│   ├── generators_utils.py            # Template loading & placeholder filling
+│   ├── hook_function_gen.py
+│   ├── hook_dlopen_functions_gen.py
+│   ├── modify_section_protection_gen.py
+│   ├── negate_cond_branch_arm64_gen.py
+│   └── negate_cond_branch_x86_gen.py
+└── templates/
+    ├── hook_function.js
+    ├── hook_dlopen_functions.js
+    ├── modify_section_protection.js
+    ├── negate_cond_branch_arm64.js
+    └── negate_cond_branch_x86.js
 ```
 
 ## Installation
@@ -158,17 +157,14 @@ variant (`register`, `register_for_address`, or
 
 ## Adding a New Snippet Type
 
-1. Create a `.js` template in `binjaXfrida/templates/` using
+1. Create a `.js` template in `templates/` using
    `[PLACEHOLDER_NAME]` syntax.
-2. Create a `*_gen.py` generator in `binjaXfrida/generators/` that
-   reads and fills the template.
-3. Export the generator function in
-   `binjaXfrida/generators/__init__.py`.
-4. Create a `*_action.py` in `binjaXfrida/actions/` that subclasses
-   `Action`, `AddressAction`, or `FunctionAction` and implements
-   `execute()`.
-5. Register the action in `binjaXfrida/binjaXfrida.py` via the
-   `ActionManager`.
+2. Create a `*_gen.py` generator in `generators/` that reads and
+   fills the template.
+3. Export the generator function in `generators/__init__.py`.
+4. Create a `*_action.py` in `actions/` that subclasses `Action`,
+   `AddressAction`, or `FunctionAction` and implements `execute()`.
+5. Register the action in `plugin.py` via the `ActionManager`.
 
 ## Requirements
 
