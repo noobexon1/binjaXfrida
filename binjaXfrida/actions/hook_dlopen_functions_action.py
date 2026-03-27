@@ -4,7 +4,9 @@ from binaryninja import BinaryView, log_warn
 
 from binjaXfrida.actions.action_framework import Action
 from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
-from binjaXfrida.generators.hook_dlopen_functions_gen import generate_dlopen_hook_snippet
+from binjaXfrida.generators.hook_dlopen_functions_gen import (
+    generate_dlopen_hook_snippet,
+)
 
 
 class GenerateDlopenHooks(Action):
@@ -29,4 +31,7 @@ class GenerateDlopenHooks(Action):
         if snippet and not snippet.startswith("// Error:"):
             copy_to_clipboard(snippet)
         else:
-            log_warn(f"[binjaXfrida] Error: Could not generate dlopen hook script: {snippet}")
+            log_warn(
+                f"[binjaXfrida] Error: Could not generate "
+                f"dlopen hook script: {snippet}"
+            )

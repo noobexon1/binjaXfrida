@@ -43,7 +43,10 @@ def copy_to_clipboard(data: str) -> bool:
     try:
         app = QApplication.instance()
         if not app:
-            log_warn("[binjaXfrida] Warning: QApplication.instance() is None. Attempting to create one for clipboard.")
+            log_warn(
+                "[binjaXfrida] Warning: QApplication.instance()"
+                " is None. Attempting to create one."
+            )
             app = QApplication([])
 
         clipboard = app.clipboard()

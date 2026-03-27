@@ -4,7 +4,9 @@ from binaryninja import BinaryView, log_warn
 
 from binjaXfrida.actions.action_framework import AddressAction
 from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
-from binjaXfrida.generators.modify_section_protection_gen import generate_modify_section_protection_snippet
+from binjaXfrida.generators.modify_section_protection_gen import (
+    generate_modify_section_protection_snippet,
+)
 
 
 class ModifySectionProtection(AddressAction):
@@ -37,7 +39,10 @@ class ModifySectionProtection(AddressAction):
 
         section_name = self._get_section_name_at(bv, addr)
         if not section_name:
-            log_warn(f"[binjaXfrida] Error: Could not determine the containing section for address {hex(addr)}.")
+            log_warn(
+                f"[binjaXfrida] Error: Could not determine the "
+                f"containing section for address {hex(addr)}."
+            )
             return
 
         if not section_name.startswith("."):
@@ -47,9 +52,14 @@ class ModifySectionProtection(AddressAction):
             )
             return
 
-        snippet = generate_modify_section_protection_snippet(module_name, section_name)
+        snippet = generate_modify_section_protection_snippet(
+            module_name, section_name
+        )
 
         if snippet and not snippet.startswith("// Error:"):
             copy_to_clipboard(snippet)
         else:
-            log_warn(f"[binjaXfrida] Error: Could not generate modify section protection script: {snippet}")
+            log_warn(
+                f"[binjaXfrida] Error: Could not generate "
+                f"modify section protection script: {snippet}"
+            )

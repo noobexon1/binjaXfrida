@@ -14,7 +14,10 @@ def generate_dlopen_hook_snippet(module_name: str) -> str:
         during dynamic loading.
     :return: The filled Frida JavaScript snippet.
     """
-    log_info(f"[binjaXfrida] Generating dlopen hook snippet (for module: {module_name})")
+    log_info(
+        f"[binjaXfrida] Generating dlopen hook snippet "
+        f"(for module: {module_name})"
+    )
 
     template = read_template(TEMPLATE_FILENAME)
 

@@ -4,7 +4,9 @@ from binaryninja import BinaryView, log_warn
 
 from binjaXfrida.actions.action_framework import AddressAction
 from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
-from binjaXfrida.generators.negate_cond_branch_x86_gen import generate_negate_x86_cond_branch_snippet
+from binjaXfrida.generators.negate_cond_branch_x86_gen import (
+    generate_negate_x86_cond_branch_snippet,
+)
 
 
 class NegateX86CondBranch(AddressAction):
@@ -58,7 +60,9 @@ class NegateX86CondBranch(AddressAction):
             return
 
         relative_address = hex(addr - bv.start)
-        snippet = generate_negate_x86_cond_branch_snippet(module_name, relative_address)
+        snippet = generate_negate_x86_cond_branch_snippet(
+            module_name, relative_address
+        )
 
         if snippet and not snippet.startswith("// Error:"):
             copy_to_clipboard(snippet)

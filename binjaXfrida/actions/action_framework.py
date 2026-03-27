@@ -70,7 +70,9 @@ class FunctionAction(Action):
     Ninja provides the selected function automatically.
     """
 
-    def execute(self, bv: BinaryView, func: Function) -> None:  # type: ignore[override]
+    def execute(  # type: ignore[override]
+        self, bv: BinaryView, func: Function,
+    ) -> None:
         """Execute the action for a specific function.
 
         :param bv: The current Binary Ninja BinaryView.
@@ -97,7 +99,10 @@ class ActionManager:
         :param action: The action instance to register.
         """
         if any(a.name == action.name for a in self._actions):
-            log_warn(f"[binjaXfrida] Warning: Action '{action.name}' already registered. Skipping.")
+            log_warn(
+                f"[binjaXfrida] Warning: Action "
+                f"'{action.name}' already registered. Skipping."
+            )
             return
 
         self._actions.append(action)

@@ -5,7 +5,9 @@ from binaryninja import log_info
 from binjaXfrida.actions.action_framework import ActionManager
 from binjaXfrida.actions.hook_dlopen_functions_action import GenerateDlopenHooks
 from binjaXfrida.actions.hook_function_action import GenerateFunctionHook
-from binjaXfrida.actions.modify_section_protection_action import ModifySectionProtection
+from binjaXfrida.actions.modify_section_protection_action import (
+    ModifySectionProtection,
+)
 from binjaXfrida.actions.negate_cond_branch_arm64_action import NegateArm64CondBranch
 from binjaXfrida.actions.negate_cond_branch_x86_action import NegateX86CondBranch
 

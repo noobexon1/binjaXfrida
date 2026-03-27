@@ -18,7 +18,10 @@ def generate_negate_x86_cond_branch_snippet(
         base, as a hex string (e.g. ``0x1234``).
     :return: The filled Frida JavaScript snippet.
     """
-    log_info(f"[binjaXfrida] Generating negate cond branch snippet (for module: {module_name}, relative address: {relative_address})")
+    log_info(
+        f"[binjaXfrida] Generating negate x86 cond branch "
+        f"snippet (module: {module_name}, addr: {relative_address})"
+    )
 
     template_str = read_template(TEMPLATE_FILENAME)
 

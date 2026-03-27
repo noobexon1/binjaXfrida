@@ -2,7 +2,9 @@
 
 import os
 
-TEMPLATES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "templates")
+TEMPLATES_DIR = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "..", "templates"
+)
 
 
 def read_template(template_filename: str) -> str:

@@ -18,7 +18,10 @@ def generate_negate_arm64_cond_branch_snippet(
         base, as a hex string (e.g. ``0x1234``).
     :return: The filled Frida JavaScript snippet.
     """
-    log_info(f"[binjaXfrida] Generating snippet to negate ARM64 conditional branch at: {relative_address}")
+    log_info(
+        f"[binjaXfrida] Generating snippet to negate ARM64 "
+        f"conditional branch at: {relative_address}"
+    )
 
     template = read_template(TEMPLATE_FILENAME)
 

@@ -18,7 +18,10 @@ def generate_modify_section_protection_snippet(
         (e.g. ``.text``).
     :return: The filled Frida JavaScript snippet.
     """
-    log_info(f"[binjaXfrida] Generating modify section protection snippet (for module: {module_name}, section: {section_name})")
+    log_info(
+        f"[binjaXfrida] Generating modify section protection "
+        f"snippet (module: {module_name}, section: {section_name})"
+    )
 
     template = read_template(TEMPLATE_FILENAME)
 

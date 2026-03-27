@@ -23,7 +23,9 @@ class GenerateFunctionHook(FunctionAction):
         function_relative_address = hex(func.start - bv.start)
         function_name = func.name or f"sub_{function_relative_address.lstrip('0x')}"
 
-        snippet = generate_function_hook_snippet(module_name, function_relative_address, function_name)
+        snippet = generate_function_hook_snippet(
+            module_name, function_relative_address, function_name
+        )
 
         if snippet and not snippet.startswith("// Error:"):
             copy_to_clipboard(snippet)

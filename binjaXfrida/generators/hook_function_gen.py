@@ -20,7 +20,10 @@ def generate_function_hook_snippet(
     :param function_name: A human-readable name for the function.
     :return: The filled Frida JavaScript snippet.
     """
-    log_info(f"[binjaXfrida] Generating hook snippet for function at: {function_relative_address} (Name: {function_name})")
+    log_info(
+        f"[binjaXfrida] Generating hook snippet for function "
+        f"at: {function_relative_address} (Name: {function_name})"
+    )
 
     template = read_template(TEMPLATE_FILENAME)
 
