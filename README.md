@@ -1,122 +1,78 @@
 # binjaXfrida
 
-> Binja and Frida. Better together!
+> *Binja and Frida. Better together!*
 
-A [Binary Ninja](https://binary.ninja/) plugin that bridges the gap
-between **static analysis** in Binary Ninja and **dynamic
-instrumentation** with [Frida](https://frida.re/). Generate
-ready-to-use Frida JavaScript snippets directly from your Binary Ninja
-session and copy them to the clipboard with a single click.
+A [Binary Ninja](https://binary.ninja/) plugin that generates
+ready-to-use [Frida](https://frida.re/) JavaScript snippets directly
+from your static analysis session. Right-click a function, an
+instruction, or a section -- get a Frida script on your clipboard,
+ready to paste and run.
 
 Inspired by [idaXfrida](https://github.com/noobexon1/idaXfrida).
 
----
+## Highlights
 
-## Features
-
-- **Hook any function** -- Generate a Frida `Interceptor.attach` script
-  for a function identified in Binary Ninja, targeting it by module name
-  and relative virtual address (RVA).
-- **Hook `dlopen` family** -- Monitor dynamic library loading (`dlopen`,
-  `dlopen_ext`, `android_dlopen_ext`) and detect when a specific module
-  is loaded at runtime.
-- **Negate conditional branches** -- Patch conditional branch
-  instructions in memory via Frida's `Memory.patchCode`, with
-  architecture-specific support for **ARM64** and **x86/x64**.
-- **Modify section protection** -- Change memory protection of a named
-  section to `rwx` at runtime, useful for self-modifying code or
-  unpacking scenarios.
-- **Clipboard integration** -- Generated scripts are automatically
-  copied to the system clipboard, ready to paste into your Frida
-  workflow.
-- **Cross-platform** -- Works on **Windows**, **macOS**, and **Linux**.
-
-## Project Structure
-
-```
-binjaXfrida/
-├── __init__.py                        # Plugin entry point
-├── plugin.py                          # Plugin init & action registration
-├── plugin.json                        # Binary Ninja plugin metadata
-├── pyproject.toml                     # Python project metadata
-├── LICENSE                            # MIT license
-├── package.json                       # Dev dependency (@types/frida-gum)
-├── install.ps1                        # Dev helper: install & restart BN
-├── actions/
-│   ├── __init__.py
-│   ├── action_framework.py            # Action / ActionManager base classes
-│   ├── action_utils.py                # BinaryView helpers & clipboard
-│   ├── hook_function_action.py
-│   ├── hook_dlopen_functions_action.py
-│   ├── modify_section_protection_action.py
-│   ├── negate_cond_branch_arm64_action.py
-│   └── negate_cond_branch_x86_action.py
-├── generators/
-│   ├── __init__.py                    # Re-exports all generators
-│   ├── generators_utils.py            # Template loading & placeholder filling
-│   ├── hook_function_gen.py
-│   ├── hook_dlopen_functions_gen.py
-│   ├── modify_section_protection_gen.py
-│   ├── negate_cond_branch_arm64_gen.py
-│   └── negate_cond_branch_x86_gen.py
-└── templates/
-    ├── hook_function.js
-    ├── hook_dlopen_functions.js
-    ├── modify_section_protection.js
-    ├── negate_cond_branch_arm64.js
-    └── negate_cond_branch_x86.js
-```
+- Hook any function with a single click -- `Interceptor.attach`
+  by module name and RVA
+- Monitor `dlopen` / `android_dlopen_ext` to catch library loads
+  at runtime
+- Negate conditional branches in memory (**ARM64** and **x86/x64**)
+- Change section protection to `rwx` for unpacking or
+  self-modifying code
+- Generated scripts are copied to the clipboard automatically
+- Works on **Windows**, **macOS**, and **Linux**
 
 ## Installation
 
-### From the Binary Ninja Plugin Manager
+### Plugin Manager
 
-Search for **binjaXfrida** in the Plugin Manager and install it
-directly.
+Search for **binjaXfrida** in Binary Ninja's Plugin Manager and
+click install.
 
-### Manual Installation
+### Manual
 
-1. Locate your Binary Ninja plugins directory:
-   - **Windows:** `%APPDATA%\Binary Ninja\plugins\`
-   - **macOS:** `~/Library/Application Support/Binary Ninja/plugins/`
-   - **Linux:** `~/.binaryninja/plugins/`
+```bash
+cd /path/to/binaryninja/plugins
+git clone https://github.com/noobexon1/binjaXfrida.git
+```
 
-2. Clone this repository into the plugins directory:
+Restart Binary Ninja. That's it.
 
-   ```bash
-   cd /path/to/binaryninja/plugins
-   git clone https://github.com/noobexon1/binjaXfrida.git
-   ```
+<details>
+<summary>Where is my plugins directory?</summary>
 
-3. Restart Binary Ninja.
+- **Windows:** `%APPDATA%\Binary Ninja\plugins\`
+- **macOS:** `~/Library/Application Support/Binary Ninja/plugins/`
+- **Linux:** `~/.binaryninja/plugins/`
+
+</details>
+
+### Requirements
+
+- [Binary Ninja](https://binary.ninja/) (any recent version)
+- Python >= 3.13 (bundled with Binary Ninja)
+- [Frida](https://frida.re/) on the target device (for running
+  the generated scripts)
 
 ## Usage
 
 1. Open a binary in Binary Ninja.
-2. Navigate to a function or address of interest.
-3. Open the **binjaXfrida** submenu from the command palette or plugin
-   menu. Actions are grouped into categories:
-   - **Hooks** -- function hooks, dlopen hooks
-   - **Patching** -- negate conditional branches (ARM64 / x86)
-   - **Memory** -- modify section protection
-4. The generated JavaScript is copied to your clipboard automatically.
-5. Paste the snippet into your Frida session (`frida` CLI, a Python
-   script, or any Frida-based tool).
+2. Right-click a function, address, or navigate to a section.
+3. Pick an action from the **binjaXfrida** submenu.
+4. Paste the clipboard into your Frida session.
 
-### Available Actions
-
-| Action | Category | Scope | Description |
-|--------|----------|-------|-------------|
+| Action | Category | Scope | What it generates |
+|--------|----------|-------|-------------------|
 | **Generate function hook** | Hooks | Function | `Interceptor.attach` on a function by RVA |
-| **Generate dlopen hooks** | Hooks | Binary | Monitor `dlopen` / `android_dlopen_ext` calls |
-| **Negate cond branch (ARM64)** | Patching | Address | XOR condition bit to flip an ARM64 branch |
-| **Negate cond branch (x86)** | Patching | Address | Patch short/near x86 conditional jumps |
+| **Generate dlopen hooks** | Hooks | Binary | Hooks for `dlopen` / `android_dlopen_ext` |
+| **Negate cond branch (ARM64)** | Patching | Address | XOR condition bit to flip a branch |
+| **Negate cond branch (x86)** | Patching | Address | Patch short/near conditional jumps |
 | **Modify section permissions** | Memory | Address | Set a section to `rwx` at runtime |
 
-### Programmatic Usage
+### Programmatic usage
 
-You can also use the generators directly from Binary Ninja's Python
-console or your own scripts:
+The generators can also be called directly from Binary Ninja's
+Python console:
 
 ```python
 from binjaXfrida.generators import generate_function_hook_snippet
@@ -134,28 +90,36 @@ print(script)
 binjaXfrida follows a three-layer **action -> generator -> template**
 architecture:
 
-1. **Templates** (`templates/*.js`) are self-contained Frida scripts
-   wrapped in IIFEs with `[PLACEHOLDER]` tokens.
-2. **Generators** (`generators/*_gen.py`) load a template, fill in the
-   placeholders with concrete values, and return the resulting script
-   string.
-3. **Actions** (`actions/*_action.py`) are Binary Ninja `PluginCommand`
-   wrappers. Each action extracts the relevant context from the current
-   `BinaryView` (module name, RVA, section, etc.), calls the
-   appropriate generator, and copies the result to the clipboard.
+```
+┌──────────┐      ┌───────────┐      ┌──────────┐
+│  Action   │ ---> │ Generator │ ---> │ Template │
+│ (BN UI)   │      │ (Python)  │      │  (.js)   │
+└──────────┘      └───────────┘      └──────────┘
+  extracts          fills              Frida IIFE
+  context from      placeholders       with [TOKEN]
+  BinaryView        & returns string   placeholders
+```
 
-The `ActionManager` in `action_framework.py` handles registration,
-automatically routing each action to the correct `PluginCommand`
-variant (`register`, `register_for_address`, or
-`register_for_function`) based on its base class:
+- **Templates** (`templates/*.js`) -- self-contained Frida scripts
+  with `[PLACEHOLDER]` tokens.
+- **Generators** (`generators/*_gen.py`) -- load a template, fill
+  in placeholders, return the script string.
+- **Actions** (`actions/*_action.py`) -- extract context from the
+  `BinaryView`, call the generator, copy the result to clipboard.
 
-- **`Action`** -- operates on the whole binary (e.g. dlopen hooks).
-- **`AddressAction`** -- operates on a selected address
-  (e.g. branch negation, section protection).
-- **`FunctionAction`** -- operates on a selected function
-  (e.g. function hooks).
+The `ActionManager` routes each action to the right
+`PluginCommand.register*` variant based on its base class:
+`Action` (binary-wide), `AddressAction` (selected address), or
+`FunctionAction` (selected function).
 
-## Adding a New Snippet Type
+## Contributing
+
+Contributions, bug reports, and feature requests are welcome!
+Feel free to open an
+[issue](https://github.com/noobexon1/binjaXfrida/issues) or
+submit a pull request.
+
+### Adding a new snippet type
 
 1. Create a `.js` template in `templates/` using
    `[PLACEHOLDER_NAME]` syntax.
@@ -166,32 +130,23 @@ variant (`register`, `register_for_address`, or
    `AddressAction`, or `FunctionAction` and implements `execute()`.
 5. Register the action in `plugin.py` via the `ActionManager`.
 
-## Requirements
+### Development setup
 
-- [Binary Ninja](https://binary.ninja/) (any recent version)
-- Python >= 3.13 (provided by Binary Ninja's bundled Python)
-- [Frida](https://frida.re/) installed on the target device /
-  environment (for running the generated scripts)
+The included `install.ps1` (Windows/PowerShell) copies the plugin
+into the Binary Ninja plugins directory and restarts BN:
 
-### Optional (Development)
+```powershell
+.\install.ps1            # install and restart
+.\install.ps1 -NoRestart # install only
+```
 
-- `npm install` to get `@types/frida-gum` for IntelliSense when
-  editing the JS templates.
-
-## Contributing
-
-Contributions are welcome! If you'd like to add a new snippet type,
-fix a bug, or improve the UI integration:
-
-1. Fork the repository.
-2. Create a feature branch.
-3. Submit a pull request.
+Run `npm install` for `@types/frida-gum` IntelliSense when editing
+the JS templates.
 
 ## License
 
-This project is licensed under the
-[MIT License](https://opensource.org/licenses/MIT).
+[MIT](LICENSE)
 
 ## Author
 
-**noobexon1**
+Created by [**noobexon1**](https://github.com/noobexon1).
