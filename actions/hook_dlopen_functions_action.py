@@ -3,11 +3,9 @@
 from binaryninja import BinaryView
 
 from binjaXfrida.actions.action_framework import Action
-from binjaXfrida.log import log_warn
 from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
-from binjaXfrida.generators.hook_dlopen_functions_gen import (
-    generate_dlopen_hook_snippet,
-)
+from binjaXfrida.generators.hook_dlopen_functions_gen import DlopenHookGenerator
+from binjaXfrida.log import log_warn
 
 
 class GenerateDlopenHooks(Action):
@@ -27,5 +25,5 @@ class GenerateDlopenHooks(Action):
             log_warn("Error: Could not get module name.")
             return
 
-        snippet = generate_dlopen_hook_snippet(module_name)
+        snippet = DlopenHookGenerator().generate(module_name)
         copy_to_clipboard(snippet)

@@ -3,11 +3,11 @@
 from binaryninja import BinaryView
 
 from binjaXfrida.actions.action_framework import AddressAction
-from binjaXfrida.log import log_warn
 from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
 from binjaXfrida.generators.negate_cond_branch_arm64_gen import (
-    generate_negate_arm64_cond_branch_snippet,
+    NegateArm64CondBranchGenerator,
 )
+from binjaXfrida.log import log_warn
 
 
 class NegateArm64CondBranch(AddressAction):
@@ -58,7 +58,7 @@ class NegateArm64CondBranch(AddressAction):
             return
 
         relative_address = hex(addr - bv.start)
-        snippet = generate_negate_arm64_cond_branch_snippet(
+        snippet = NegateArm64CondBranchGenerator().generate(
             module_name, relative_address
         )
         copy_to_clipboard(snippet)

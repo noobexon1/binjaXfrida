@@ -1,27 +1,20 @@
 """Generator for Frida dlopen hook snippets."""
 
-from binjaXfrida.generators.generators_utils import fill_template, read_template
-from binjaXfrida.log import log_info
-
-TEMPLATE_FILENAME = "hook_dlopen_functions.js"
+from binjaXfrida.generators.generator_framework import SnippetGenerator
 
 
-def generate_dlopen_hook_snippet(module_name: str) -> str:
-    """Generate a Frida script that hooks dlopen-family functions.
+class DlopenHookGenerator(SnippetGenerator):
+    """Generate a Frida script that hooks dlopen-family functions."""
 
-    :param module_name: The target module's file name to watch for
-        during dynamic loading.
-    :return: The filled Frida JavaScript snippet.
-    """
-    log_info(
-        f"Generating dlopen hook snippet "
-        f"(for module: {module_name})"
-    )
+    template_filename = "hook_dlopen_functions.js"
 
-    template = read_template(TEMPLATE_FILENAME)
+    def generate(self, module_name: str) -> str:
+        """Generate a Frida script that hooks dlopen-family functions.
 
-    data_to_replace = {
-        "MODULE_NAME_PLACEHOLDER": module_name,
-    }
-
-    return fill_template(template, data_to_replace)
+        :param module_name: The target module's file name to watch for
+            during dynamic loading.
+        :return: The filled Frida JavaScript snippet.
+        """
+        return self._render({
+            "MODULE_NAME_PLACEHOLDER": module_name,
+        })

@@ -3,11 +3,11 @@
 from binaryninja import BinaryView
 
 from binjaXfrida.actions.action_framework import AddressAction
-from binjaXfrida.log import log_warn
 from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
 from binjaXfrida.generators.modify_section_protection_gen import (
-    generate_modify_section_protection_snippet,
+    ModifySectionProtectionGenerator,
 )
+from binjaXfrida.log import log_warn
 
 
 class ModifySectionProtection(AddressAction):
@@ -53,7 +53,7 @@ class ModifySectionProtection(AddressAction):
             )
             return
 
-        snippet = generate_modify_section_protection_snippet(
+        snippet = ModifySectionProtectionGenerator().generate(
             module_name, section_name
         )
         copy_to_clipboard(snippet)

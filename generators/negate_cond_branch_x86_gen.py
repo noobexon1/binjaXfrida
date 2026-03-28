@@ -1,32 +1,22 @@
 """Generator for Frida x86 conditional branch negation snippets."""
 
-from binjaXfrida.generators.generators_utils import fill_template, read_template
-from binjaXfrida.log import log_info
-
-TEMPLATE_FILENAME = "negate_cond_branch_x86.js"
+from binjaXfrida.generators.generator_framework import SnippetGenerator
 
 
-def generate_negate_x86_cond_branch_snippet(
-    module_name: str,
-    relative_address: str,
-) -> str:
-    """Generate a Frida script that negates an x86 conditional branch.
+class NegateX86CondBranchGenerator(SnippetGenerator):
+    """Generate a Frida script that negates an x86 conditional branch."""
 
-    :param module_name: The target module's file name.
-    :param relative_address: The instruction's offset from the module
-        base, as a hex string (e.g. ``0x1234``).
-    :return: The filled Frida JavaScript snippet.
-    """
-    log_info(
-        f"Generating negate x86 cond branch "
-        f"snippet (module: {module_name}, addr: {relative_address})"
-    )
+    template_filename = "negate_cond_branch_x86.js"
 
-    template_str = read_template(TEMPLATE_FILENAME)
+    def generate(self, module_name: str, relative_address: str) -> str:
+        """Generate a Frida script that negates an x86 conditional branch.
 
-    data_to_replace = {
-        "MODULE_NAME_PLACEHOLDER": module_name,
-        "RELATIVE_ADDRESS_PLACEHOLDER": relative_address,
-    }
-
-    return fill_template(template_str, data_to_replace)
+        :param module_name: The target module's file name.
+        :param relative_address: The instruction's offset from the module
+            base, as a hex string (e.g. ``0x1234``).
+        :return: The filled Frida JavaScript snippet.
+        """
+        return self._render({
+            "MODULE_NAME_PLACEHOLDER": module_name,
+            "RELATIVE_ADDRESS_PLACEHOLDER": relative_address,
+        })
