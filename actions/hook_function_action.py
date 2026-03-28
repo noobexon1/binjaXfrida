@@ -3,7 +3,11 @@
 from binaryninja import BinaryView, Function
 
 from binjaXfrida.actions.action_framework import FunctionAction
-from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
+from binjaXfrida.actions.action_utils import (
+    copy_to_clipboard,
+    get_module_name,
+    get_relative_address,
+)
 from binjaXfrida.generators.hook_function_gen import FunctionHookGenerator
 
 
@@ -20,7 +24,7 @@ class GenerateFunctionHook(FunctionAction):
         :param func: The function to hook.
         """
         module_name = get_module_name(bv)
-        function_relative_address = hex(func.start - bv.start)
+        function_relative_address = get_relative_address(bv, func.start)
         function_name = func.name or f"sub_{function_relative_address.lstrip('0x')}"
 
         snippet = FunctionHookGenerator().generate(

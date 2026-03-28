@@ -3,7 +3,11 @@
 from binaryninja import BinaryView
 
 from binjaXfrida.actions.action_framework import AddressAction
-from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
+from binjaXfrida.actions.action_utils import (
+    copy_to_clipboard,
+    get_module_name,
+    get_relative_address,
+)
 from binjaXfrida.generators.negate_cond_branch_x86_gen import (
     NegateX86CondBranchGenerator,
 )
@@ -60,7 +64,7 @@ class NegateX86CondBranch(AddressAction):
             )
             return
 
-        relative_address = hex(addr - bv.start)
+        relative_address = get_relative_address(bv, addr)
         snippet = NegateX86CondBranchGenerator().generate(
             module_name, relative_address
         )

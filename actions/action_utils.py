@@ -19,6 +19,18 @@ def get_module_name(bv: BinaryView) -> str:
     return result
 
 
+def get_relative_address(bv: BinaryView, addr: int) -> str:
+    """Compute an address's offset from the module base as a hex string.
+
+    :param bv: The current Binary Ninja BinaryView.
+    :param addr: The absolute address.
+    :return: The offset as a hex string (e.g. ``0x1234``).
+    """
+    result = hex(addr - bv.start)
+    log_info(f"get_relative_address: {result}")
+    return result
+
+
 def get_binja_image_base(bv: BinaryView) -> int:
     """Return the image base address of the loaded binary.
 
