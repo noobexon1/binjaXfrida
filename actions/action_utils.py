@@ -2,7 +2,7 @@
 
 import os
 
-from binaryninja import BinaryView
+from binaryninja import BinaryView, Function
 
 from binjaXfrida.log import log_info, log_warn
 from PySide6.QtWidgets import QApplication
@@ -28,6 +28,21 @@ def get_relative_address(bv: BinaryView, addr: int) -> str:
     """
     result = hex(addr - bv.start)
     log_info(f"get_relative_address: {result}")
+    return result
+
+
+def get_function_name(bv: BinaryView, func: Function) -> str:
+    """Return a human-readable name for a function.
+
+    Falls back to ``sub_<offset>`` when the function has no symbol name.
+
+    :param bv: The current Binary Ninja BinaryView.
+    :param func: The function to name.
+    :return: The function's name or a generated fallback.
+    """
+    relative_address = get_relative_address(bv, func.start)
+    result = func.name or f"sub_{relative_address.lstrip('0x')}"
+    log_info(f"get_function_name: {result}")
     return result
 
 

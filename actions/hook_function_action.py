@@ -5,6 +5,7 @@ from binaryninja import BinaryView, Function
 from binjaXfrida.actions.action_framework import FunctionAction
 from binjaXfrida.actions.action_utils import (
     copy_to_clipboard,
+    get_function_name,
     get_module_name,
     get_relative_address,
 )
@@ -25,7 +26,7 @@ class GenerateFunctionHook(FunctionAction):
         """
         module_name = get_module_name(bv)
         function_relative_address = get_relative_address(bv, func.start)
-        function_name = func.name or f"sub_{function_relative_address.lstrip('0x')}"
+        function_name = get_function_name(bv, func)
 
         snippet = FunctionHookGenerator().generate(
             module_name, function_relative_address, function_name
