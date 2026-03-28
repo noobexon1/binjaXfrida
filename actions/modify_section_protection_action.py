@@ -56,11 +56,4 @@ class ModifySectionProtection(AddressAction):
         snippet = generate_modify_section_protection_snippet(
             module_name, section_name
         )
-
-        if snippet and not snippet.startswith("// Error:"):
-            copy_to_clipboard(snippet)
-        else:
-            log_warn(
-                f"Error: Could not generate "
-                f"modify section protection script: {snippet}"
-            )
+        copy_to_clipboard(snippet)

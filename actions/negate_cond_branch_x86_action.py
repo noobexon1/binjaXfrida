@@ -64,8 +64,4 @@ class NegateX86CondBranch(AddressAction):
         snippet = generate_negate_x86_cond_branch_snippet(
             module_name, relative_address
         )
-
-        if snippet and not snippet.startswith("// Error:"):
-            copy_to_clipboard(snippet)
-        else:
-            log_warn("Error: Failed to generate script.")
+        copy_to_clipboard(snippet)

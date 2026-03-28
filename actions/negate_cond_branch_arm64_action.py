@@ -61,8 +61,4 @@ class NegateArm64CondBranch(AddressAction):
         snippet = generate_negate_arm64_cond_branch_snippet(
             module_name, relative_address
         )
-
-        if snippet and not snippet.startswith("// Error:"):
-            copy_to_clipboard(snippet)
-        else:
-            log_warn("Error: Failed to generate script.")
+        copy_to_clipboard(snippet)

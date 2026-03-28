@@ -3,7 +3,6 @@
 from binaryninja import BinaryView, Function
 
 from binjaXfrida.actions.action_framework import FunctionAction
-from binjaXfrida.log import log_warn
 from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
 from binjaXfrida.generators.hook_function_gen import generate_function_hook_snippet
 
@@ -27,8 +26,4 @@ class GenerateFunctionHook(FunctionAction):
         snippet = generate_function_hook_snippet(
             module_name, function_relative_address, function_name
         )
-
-        if snippet and not snippet.startswith("// Error:"):
-            copy_to_clipboard(snippet)
-        else:
-            log_warn("Error: Failed to generate hook script.")
+        copy_to_clipboard(snippet)

@@ -28,11 +28,4 @@ class GenerateDlopenHooks(Action):
             return
 
         snippet = generate_dlopen_hook_snippet(module_name)
-
-        if snippet and not snippet.startswith("// Error:"):
-            copy_to_clipboard(snippet)
-        else:
-            log_warn(
-                f"Error: Could not generate "
-                f"dlopen hook script: {snippet}"
-            )
+        copy_to_clipboard(snippet)

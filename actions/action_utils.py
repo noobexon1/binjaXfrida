@@ -37,7 +37,7 @@ def copy_to_clipboard(data: str) -> bool:
     :return: ``True`` if the data was copied successfully,
         ``False`` otherwise.
     """
-    if not data or data.startswith("// Error:"):
+    if not data:
         log_warn("Error: No valid script data generated to copy.")
         return False
 
