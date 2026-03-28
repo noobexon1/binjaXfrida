@@ -46,6 +46,7 @@ if (-not (Test-Path $BinjaPluginsDir)) {
 # --- Validate required source items exist before doing anything ---
 $items = @(
     "__init__.py",
+    "log.py",
     "plugin.py",
     "plugin.json",
     "LICENSE",
