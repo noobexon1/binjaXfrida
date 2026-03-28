@@ -2,6 +2,8 @@
 <br />
 <div align="center">
 
+<img src="assets/logo.jpg" alt="binjaXfrida logo" width="200" />
+
 <h1 align="center">binjaXfrida</h1>
 
   <p align="center">
