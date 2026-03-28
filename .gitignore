@@ -8,3 +8,4 @@ package.json
 .cursor
 pyproject.toml
 plugin.json
+pyrightconfig.json
