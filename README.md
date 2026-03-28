@@ -2,7 +2,7 @@
 <br />
 <div align="center">
 
-<img src="assets/logo.jpg" alt="binjaXfrida logo" width="200" />
+<img src="assets/logo.jpg" alt="binjaXfrida logo" width="400" />
 
 <h1 align="center">binjaXfrida</h1>
 
