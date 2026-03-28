@@ -2,7 +2,9 @@
 
 import os
 
-from binaryninja import BinaryView, log_info, log_warn
+from binaryninja import BinaryView
+
+from binjaXfrida.log import log_info, log_warn
 from PySide6.QtWidgets import QApplication
 
 
@@ -13,7 +15,7 @@ def get_module_name(bv: BinaryView) -> str:
     :return: The base file name of the loaded binary.
     """
     result = os.path.basename(bv.file.original_filename)
-    log_info(f"[binjaXfrida] get_module_name: {result}")
+    log_info(f"get_module_name: {result}")
     return result
 
 
@@ -24,7 +26,7 @@ def get_binja_image_base(bv: BinaryView) -> int:
     :return: The start address of the binary.
     """
     result = bv.start
-    log_info(f"[binjaXfrida] get_binja_image_base: {hex(result)}")
+    log_info(f"get_binja_image_base: {hex(result)}")
     return result
 
 
@@ -36,7 +38,7 @@ def copy_to_clipboard(data: str) -> bool:
         ``False`` otherwise.
     """
     if not data or data.startswith("// Error:"):
-        log_warn("[binjaXfrida] Error: No valid script data generated to copy.")
+        log_warn("Error: No valid script data generated to copy.")
         return False
 
     clipboard_copied = False
@@ -44,23 +46,23 @@ def copy_to_clipboard(data: str) -> bool:
         app = QApplication.instance()
         if not app:
             log_warn(
-                "[binjaXfrida] Warning: QApplication.instance()"
+                "Warning: QApplication.instance()"
                 " is None. Attempting to create one."
             )
             app = QApplication([])
 
         if not isinstance(app, QApplication):
-            log_warn("[binjaXfrida] Warning: App instance is not a QApplication.")
+            log_warn("Warning: App instance is not a QApplication.")
             return False
 
         clipboard = app.clipboard()
         if clipboard:
             clipboard.setText(data)
-            log_info("[binjaXfrida] Generated Frida script copied to clipboard!")
+            log_info("Generated Frida script copied to clipboard!")
             clipboard_copied = True
         else:
-            log_warn("[binjaXfrida] Warning: Could not get clipboard instance.")
+            log_warn("Warning: Could not get clipboard instance.")
     except Exception as e:
-        log_warn(f"[binjaXfrida] Error copying script to clipboard: {e}")
+        log_warn(f"Error copying script to clipboard: {e}")
 
     return clipboard_copied

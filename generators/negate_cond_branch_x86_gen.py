@@ -1,8 +1,7 @@
 """Generator for Frida x86 conditional branch negation snippets."""
 
-from binaryninja import log_info
-
 from binjaXfrida.generators.generators_utils import fill_template, read_template
+from binjaXfrida.log import log_info
 
 TEMPLATE_FILENAME = "negate_cond_branch_x86.js"
 
@@ -19,7 +18,7 @@ def generate_negate_x86_cond_branch_snippet(
     :return: The filled Frida JavaScript snippet.
     """
     log_info(
-        f"[binjaXfrida] Generating negate x86 cond branch "
+        f"Generating negate x86 cond branch "
         f"snippet (module: {module_name}, addr: {relative_address})"
     )
 

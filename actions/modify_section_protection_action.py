@@ -1,8 +1,9 @@
 """Action to generate a Frida section protection modification snippet."""
 
-from binaryninja import BinaryView, log_warn
+from binaryninja import BinaryView
 
 from binjaXfrida.actions.action_framework import AddressAction
+from binjaXfrida.log import log_warn
 from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
 from binjaXfrida.generators.modify_section_protection_gen import (
     generate_modify_section_protection_snippet,
@@ -40,14 +41,14 @@ class ModifySectionProtection(AddressAction):
         section_name = self._get_section_name_at(bv, addr)
         if not section_name:
             log_warn(
-                f"[binjaXfrida] Error: Could not determine the "
+                f"Error: Could not determine the "
                 f"containing section for address {hex(addr)}."
             )
             return
 
         if not section_name.startswith("."):
             log_warn(
-                f"[binjaXfrida] Error: Address is not in a standard section. "
+                f"Error: Address is not in a standard section. "
                 f"(Section name: {section_name})"
             )
             return
@@ -60,6 +61,6 @@ class ModifySectionProtection(AddressAction):
             copy_to_clipboard(snippet)
         else:
             log_warn(
-                f"[binjaXfrida] Error: Could not generate "
+                f"Error: Could not generate "
                 f"modify section protection script: {snippet}"
             )

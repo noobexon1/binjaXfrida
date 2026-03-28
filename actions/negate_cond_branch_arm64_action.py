@@ -1,8 +1,9 @@
 """Action to generate a Frida ARM64 conditional branch negation snippet."""
 
-from binaryninja import BinaryView, log_warn
+from binaryninja import BinaryView
 
 from binjaXfrida.actions.action_framework import AddressAction
+from binjaXfrida.log import log_warn
 from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
 from binjaXfrida.generators.negate_cond_branch_arm64_gen import (
     generate_negate_arm64_cond_branch_snippet,
@@ -51,7 +52,7 @@ class NegateArm64CondBranch(AddressAction):
         if not self._is_arm64_cond_branch(bv, addr):
             disasm = bv.get_disassembly(addr) or "<unknown>"
             log_warn(
-                f"[binjaXfrida] Error: Instruction at {hex(addr)} ('{disasm}') "
+                f"Error: Instruction at {hex(addr)} ('{disasm}') "
                 f"is not a recognized ARM64 conditional branch."
             )
             return
@@ -64,4 +65,4 @@ class NegateArm64CondBranch(AddressAction):
         if snippet and not snippet.startswith("// Error:"):
             copy_to_clipboard(snippet)
         else:
-            log_warn("[binjaXfrida] Error: Failed to generate script.")
+            log_warn("Error: Failed to generate script.")

@@ -2,7 +2,9 @@
 
 from typing import Optional
 
-from binaryninja import BinaryView, Function, PluginCommand, log_info, log_warn
+from binaryninja import BinaryView, Function, PluginCommand
+
+from binjaXfrida.log import log_info, log_warn
 
 
 PLUGIN_MENU = "binjaXfrida"
@@ -100,7 +102,7 @@ class ActionManager:
         """
         if any(a.name == action.name for a in self._actions):
             log_warn(
-                f"[binjaXfrida] Warning: Action "
+                f"Warning: Action "
                 f"'{action.name}' already registered. Skipping."
             )
             return
@@ -126,7 +128,7 @@ class ActionManager:
                 lambda bv, a=action: a.execute(bv),
             )
 
-        log_info(f"[binjaXfrida] Action '{action.name}' registered.")
+        log_info(f"Action '{action.name}' registered.")
 
     def finalize(self) -> None:
         """Clear internal action tracking.
@@ -134,5 +136,5 @@ class ActionManager:
         Binary Ninja commands persist for the session; this only
         resets the manager's internal list.
         """
-        log_info("[binjaXfrida] Finalizing actions...")
+        log_info("Finalizing actions...")
         self._actions.clear()

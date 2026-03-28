@@ -1,8 +1,7 @@
 """Generator for Frida function hook snippets."""
 
-from binaryninja import log_info
-
 from binjaXfrida.generators.generators_utils import fill_template, read_template
+from binjaXfrida.log import log_info
 
 TEMPLATE_FILENAME = "hook_function.js"
 
@@ -21,7 +20,7 @@ def generate_function_hook_snippet(
     :return: The filled Frida JavaScript snippet.
     """
     log_info(
-        f"[binjaXfrida] Generating hook snippet for function "
+        f"Generating hook snippet for function "
         f"at: {function_relative_address} (Name: {function_name})"
     )
 

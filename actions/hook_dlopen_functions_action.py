@@ -1,8 +1,9 @@
 """Action to generate a Frida dlopen hook snippet."""
 
-from binaryninja import BinaryView, log_warn
+from binaryninja import BinaryView
 
 from binjaXfrida.actions.action_framework import Action
+from binjaXfrida.log import log_warn
 from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
 from binjaXfrida.generators.hook_dlopen_functions_gen import (
     generate_dlopen_hook_snippet,
@@ -23,7 +24,7 @@ class GenerateDlopenHooks(Action):
         module_name = get_module_name(bv)
 
         if not module_name:
-            log_warn("[binjaXfrida] Error: Could not get module name.")
+            log_warn("Error: Could not get module name.")
             return
 
         snippet = generate_dlopen_hook_snippet(module_name)
@@ -32,6 +33,6 @@ class GenerateDlopenHooks(Action):
             copy_to_clipboard(snippet)
         else:
             log_warn(
-                f"[binjaXfrida] Error: Could not generate "
+                f"Error: Could not generate "
                 f"dlopen hook script: {snippet}"
             )

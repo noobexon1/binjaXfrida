@@ -1,8 +1,7 @@
 """Generator for Frida section protection modification snippets."""
 
-from binaryninja import log_info
-
 from binjaXfrida.generators.generators_utils import fill_template, read_template
+from binjaXfrida.log import log_info
 
 TEMPLATE_FILENAME = "modify_section_protection.js"
 
@@ -19,7 +18,7 @@ def generate_modify_section_protection_snippet(
     :return: The filled Frida JavaScript snippet.
     """
     log_info(
-        f"[binjaXfrida] Generating modify section protection "
+        f"Generating modify section protection "
         f"snippet (module: {module_name}, section: {section_name})"
     )
 

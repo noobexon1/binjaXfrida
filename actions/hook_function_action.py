@@ -1,8 +1,9 @@
 """Action to generate a Frida function hook snippet."""
 
-from binaryninja import BinaryView, Function, log_warn
+from binaryninja import BinaryView, Function
 
 from binjaXfrida.actions.action_framework import FunctionAction
+from binjaXfrida.log import log_warn
 from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
 from binjaXfrida.generators.hook_function_gen import generate_function_hook_snippet
 
@@ -30,4 +31,4 @@ class GenerateFunctionHook(FunctionAction):
         if snippet and not snippet.startswith("// Error:"):
             copy_to_clipboard(snippet)
         else:
-            log_warn("[binjaXfrida] Error: Failed to generate hook script.")
+            log_warn("Error: Failed to generate hook script.")

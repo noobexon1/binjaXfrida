@@ -1,8 +1,7 @@
 """Generator for Frida dlopen hook snippets."""
 
-from binaryninja import log_info
-
 from binjaXfrida.generators.generators_utils import fill_template, read_template
+from binjaXfrida.log import log_info
 
 TEMPLATE_FILENAME = "hook_dlopen_functions.js"
 
@@ -15,7 +14,7 @@ def generate_dlopen_hook_snippet(module_name: str) -> str:
     :return: The filled Frida JavaScript snippet.
     """
     log_info(
-        f"[binjaXfrida] Generating dlopen hook snippet "
+        f"Generating dlopen hook snippet "
         f"(for module: {module_name})"
     )
 

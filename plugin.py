@@ -1,8 +1,7 @@
 """Plugin initialization and action registration for binjaXfrida."""
 
-from binaryninja import log_info
-
 from binjaXfrida.actions.action_framework import ActionManager
+from binjaXfrida.log import log_info
 from binjaXfrida.actions.hook_dlopen_functions_action import GenerateDlopenHooks
 from binjaXfrida.actions.hook_function_action import GenerateFunctionHook
 from binjaXfrida.actions.modify_section_protection_action import (
@@ -22,4 +21,4 @@ def init_plugin() -> None:
     manager.register(NegateX86CondBranch())
     manager.register(ModifySectionProtection())
 
-    log_info("[binjaXfrida] Plugin started!")
+    log_info("Plugin started!")

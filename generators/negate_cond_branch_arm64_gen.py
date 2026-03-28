@@ -1,8 +1,7 @@
 """Generator for Frida ARM64 conditional branch negation snippets."""
 
-from binaryninja import log_info
-
 from binjaXfrida.generators.generators_utils import fill_template, read_template
+from binjaXfrida.log import log_info
 
 TEMPLATE_FILENAME = "negate_cond_branch_arm64.js"
 
@@ -19,7 +18,7 @@ def generate_negate_arm64_cond_branch_snippet(
     :return: The filled Frida JavaScript snippet.
     """
     log_info(
-        f"[binjaXfrida] Generating snippet to negate ARM64 "
+        f"Generating snippet to negate ARM64 "
         f"conditional branch at: {relative_address}"
     )
 
