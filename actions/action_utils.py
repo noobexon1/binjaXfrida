@@ -49,6 +49,10 @@ def copy_to_clipboard(data: str) -> bool:
             )
             app = QApplication([])
 
+        if not isinstance(app, QApplication):
+            log_warn("[binjaXfrida] Warning: App instance is not a QApplication.")
+            return False
+
         clipboard = app.clipboard()
         if clipboard:
             clipboard.setText(data)

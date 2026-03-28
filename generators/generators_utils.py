@@ -1,6 +1,7 @@
 """Template loading and placeholder substitution utilities."""
 
 import os
+from collections.abc import Mapping
 
 TEMPLATES_DIR = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "templates"
@@ -19,7 +20,7 @@ def read_template(template_filename: str) -> str:
         return f.read()
 
 
-def fill_template(template: str, data_to_replace: dict[str, str | int]) -> str:
+def fill_template(template: str, data_to_replace: Mapping[str, str | int]) -> str:
     """Replace ``[PLACEHOLDER]`` tokens in a template with actual values.
 
     :param template: The template string containing placeholders.
