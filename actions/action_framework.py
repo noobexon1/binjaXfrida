@@ -1,4 +1,16 @@
-"""Action framework for registering binjaXfrida commands in Binary Ninja."""
+"""Action framework for registering binjaXfrida commands in Binary Ninja.
+
+Every action **must** subclass one of the base action classes
+(:class:`Action`, :class:`AddressAction`, or :class:`FunctionAction`)
+and:
+
+1. Set the ``description`` class attribute to a non-empty string that
+   will appear in Binary Ninja's plugin menu.
+2. Override ``execute()`` with the action's logic.
+
+Both constraints are validated at class-creation time; forgetting
+either one raises :class:`TypeError` immediately.
+"""
 
 from typing import Optional
 
@@ -19,6 +31,22 @@ class Action:
 
     description: str = ""
     category_name: Optional[str] = None
+
+    def __init_subclass__(cls, **kwargs: object) -> None:
+        super().__init_subclass__(**kwargs)
+
+        if cls.__module__ == __name__:
+            return
+
+        if not getattr(cls, "description", None):
+            raise TypeError(
+                f"{cls.__name__} must define a non-empty 'description'."
+            )
+
+        if "execute" not in cls.__dict__:
+            raise TypeError(
+                f"{cls.__name__} must implement 'execute()'."
+            )
 
     @property
     def name(self) -> str:
