@@ -1,124 +1,117 @@
-<!-- PROJECT LOGO -->
-<br />
 <div align="center">
 
 <img src="assets/logo.jpg" alt="binjaXfrida logo" width="400" />
 
-## binjaXfrida: Binary Ninja <-> Frida
+# binjaXfrida
+
+**Generate Frida scripts directly from Binary Ninja.**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![GitHub release](https://img.shields.io/github/v/release/noobexon1/binjaXfrida)](https://github.com/noobexon1/binjaXfrida/releases)
+[![GitHub stars](https://img.shields.io/github/stars/noobexon1/binjaXfrida)](https://github.com/noobexon1/binjaXfrida/stargazers)
 
 </div>
 
-`binjaXfrida` is a Binary Ninja plugin designed to bridge the gap between static analysis in Binary Ninja and dynamic analysis with Frida. It allows users to quickly generate Frida JavaScript snippets based on the current context in Binary Ninja (e.g., selected function, instruction, or module details) to aid in reverse engineering and dynamic instrumentation tasks.
+**Function Hook**
+<table>
+  <tr>
+    <td width="50%"><img src="assets/image_1.png" width="100%"></td>
+    <td width="50%"><img src="assets/image_2.png" width="100%"></td>
+  </tr>
+</table>
 
-## Examples:
-
-### Generate a function hook:
-
-- One click:
-
-<a href="assets/image_1.png" target="_blank">
-  <img src="assets/image_1.png" width="100%">
-</a>
-
-- Result:
-
-<a href="assets/image_2.png" target="_blank">
-  <img src="assets/image_2.png" width="100%">
-</a>
-
-### Generate a scripts to negate conditional branch on AArch64:
-
-- One click:
-
-<a href="assets/image_3.png" target="_blank">
-  <img src="assets/image_3.png" width="100%">
-</a>
-
-- Result:
-
-<a href="assets/image_4.png" target="_blank">
-  <img src="assets/image_4.png" width="100%">
-</a>
-
+**Negate Conditional Branch**
+<table>
+  <tr>
+    <td width="50%"><img src="assets/image_3.png" width="100%"></td>
+    <td width="50%"><img src="assets/image_4.png" width="100%"></td>
+  </tr>
+</table>
 
 ## Features
 
-*   **Rapid Frida Script Generation:** Right-click in Binja's Disassembly, Pseudocode, or Functions views to access script generation options.
-*   **Scripts are independent and composable:** Scripts are independent of one another, but can be nested. This design helps creating complex scripts from basic blocks. For example, you can combine snippets to hook a function, negate a conditional instruction upon enter, and then restore the code back to its original state upon leaveing the function. All that with a few clicks on the mouse in Binja.
-*   **Context-Aware Snippets:** Scripts are tailored based on the current address, function, module name, and other relevant Binja information.
-*   **Organized UI:** Actions are neatly categorized in the Binja context menu for ease of use.
-*   **Currently Supported Actions:**
-    *   **Hooks Category:**
-        *   `Generate function hook`: Creates a Frida script to intercept calls to the selected function, logging entry and exit.
-        *   `Generate dlopen hooks`: Generates a script to monitor `dlopen` (and related Android functions) to detect when a specific module is loaded.
-    *   **Memory Category:**
-        *   `Generate modify section protection script`: Creates a script to change the memory protection of the section containing the currently selected address (e.g., to make it writable).
-    *   **Patching Category:**
-        *   `Negate cond branch instruction (ARM64)`: Generates a script to flip the condition of an ARM64 conditional branch instruction.
-        *   `Negate cond branch instruction (x86/x64)`: Generates a script to flip the condition of an x86/x64 conditional branch instruction.
-*   **Clipboard Integration:** Generated scripts are automatically copied to the clipboard.
-*   **Extensible Framework:** Designed with a clear separation of concerns (`actions/`, `core/`, `templates/`, `ui/`) making it easy to add new Frida script generation capabilities.
+Right-click in Binary Ninja to generate ready-to-use Frida snippets.
+
+- **Composable scripts** — snippets are independent but can be nested to build complex instrumentation with a few clicks
+- **Context-aware** — scripts auto-fill module name, function address, and other details from your current Binja context
+- **Clipboard integration** — generated scripts are instantly copied to your clipboard
+
+### Supported Actions
+
+#### Hooks
+
+| Action | Description |
+|---|---|
+| Generate function hook | Intercept calls to the selected function, log entry/exit |
+| Generate dlopen hooks | Monitor `dlopen` to detect module loading |
+
+#### Memory
+
+| Action | Description |
+|---|---|
+| Modify section protection | Change memory protection of the section at the current address |
+
+#### Patching
+
+| Action | Description |
+|---|---|
+| Negate cond branch (ARM64) | Flip the condition of an ARM64 conditional branch |
+| Negate cond branch (x86/x64) | Flip the condition of an x86/x64 conditional branch |
 
 ## How it Works
 
-The plugin operates on a simple three-part system for each feature:
-
-1.  **Frida Templates (`templates/`):** Pre-defined Frida JavaScript files with placeholders (e.g., for module name, function address).
-2.  **Binja Actions (`actions/`):** Python classes that interface with the Binary Ninja API. They gather the necessary data from the current Binja context (e.g., function name, address under cursor), perform error handling, and then invoke a generator.
-3.  **Snippet Generators (`core/`):** Python modules that take the data from an action and populate the corresponding Frida template, producing the final script.
-4.  **UI (`ui/`):** Qt/PySide6 components such as clipboard integration. Kept separate from action logic.
-
-This modular design allows for easy addition of new features by creating a new template, an action to gather data, and a generator to combine them.
+Each feature follows a simple pipeline: a **Frida template** (`templates/`) provides the JavaScript skeleton with placeholders, an **action** (`actions/`) gathers context from Binary Ninja (function name, address, module), and a **generator** (`core/`) fills the template to produce the final script. UI concerns like clipboard live in `ui/`.
 
 ## Installation
 
-1.  **Locate your Binary Ninja plugins directory.**
-    *   Run the following command in the Binary Ninja Python console:
+**From release:**
+
+1. Find your plugins directory:
     ```python
     binaryninja.user_plugin_path()
     ```
-2.  **Copy the Plugin:**
-    *   Download and unzip the latest [release](https://github.com/noobexon1/binjaXfrida/releases) into you plugins directory.
+2. Download the latest [release](https://github.com/noobexon1/binjaXfrida/releases) and extract into that directory.
+3. Restart Binary Ninja.
 
-3.  **Restart Binary Ninja.** The plugin should be loaded automatically. You will see messages from `[binjaXfrida]` in the Binary Ninja Output window if it loads correctly.
+**From source:**
+
+1. Clone the repo into your plugins directory.
+2. Run `dev/install.ps1` (Windows). Linux/macOS scripts coming soon.
 
 ## Usage
 
-1.  Open your target binary in Binary Ninja.
-2.  Navigate to a function, instruction, or area of interest in the Disassembly, Pseudocode, or Functions view.
-3.  **Right-click** to open the context menu.
-4.  Hover over `plugins` -> `binjaXfrida`.
-5.  Select the desired category (e.g., `Hooks`, `Memory`, `Patching`).
-6.  Click on the specific script generation action you want to perform.
-7.  The generated Frida script will be printed to the Binja Output window and automatically **copied to your clipboard**.
-8.  Paste the script into your Frida CCLI, your own Frida agent, or save it to a `.js` file for later use with Frida.
-9.  Optional: Try to nest scripts within scripts! It works and its powerfull!
+1. Open your target binary in Binary Ninja.
+2. Right-click in the Disassembly, Pseudocode, or Functions view.
+3. Navigate to **Plugins** → **binjaXfrida** → choose a category and action.
+4. The generated Frida script is printed to the Output window and copied to your clipboard.
+5. Paste into your Frida CLI, agent, or `.js` file.
+
+### Script Composition
+
+Snippets are designed to be independent building blocks. You can nest scripts inside each other — for example, hook a function, negate a conditional branch on entry, and restore it on exit. Complex instrumentation from a few clicks.
 
 ## Contributing
 
-`binjaXfrida` is all about sharing. You got some nice scripts? make a snippet template for them so everyone can enjoy! :)
-Contributions are welcome! If you have ideas for new Frida snippets, improvements to existing ones, or bug fixes, please feel free to:
+Contributions welcome! Got a useful Frida snippet? Turn it into a template so everyone can use it.
 
-1.  Fork the repository.
-2.  Create a new branch for your feature or fix.
-3.  Make your changes.
-4.  Submit a pull request.
+1. Fork the repository.
+2. Create a new branch for your feature or fix.
+3. Make your changes.
+4. Submit a pull request.
 
-Please try to follow the existing code structure when adding new features:
+| Adding... | Where |
+|---|---|
+| New Frida snippet | `templates/` (JS template) + `core/` (generator) + `actions/` (action) |
+| UI element | `ui/` |
 
-*   **New snippet?** Add a `.js` template in `templates/`, a generator class in `core/`, and an action class in `actions/`.
-*   **New UI element?** Add it under `ui/`.
+JS templates must be wrapped in a self-invoking function so they remain composable (see existing templates for the pattern).
 
-Each action and generator lives in its own file for easy contribution without merge conflicts.
+Each action and generator lives in its own file — easy to contribute without merge conflicts.
 
-## Future Enhancements (Ideas)
+## Roadmap
 
-*   More sophisticated script generation (e.g., memory dumping).
-*   User-configurable templates or settings.
-*   Support for more architectures or Frida APIs.
-*   Create a wiki to help contributers setup a comfortable dev environment to create new snippets.
-*   Create a clear contribution guidelines (For now, I will code review to make sure structure is ok).
+See [open issues](https://github.com/noobexon1/binjaXfrida/issues) for planned features and known bugs.
 
 ## License
 
-MIT.
+[MIT](LICENSE)
