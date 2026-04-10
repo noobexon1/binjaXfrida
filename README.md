@@ -75,8 +75,23 @@ Each feature follows a simple pipeline: a **Frida template** (`templates/`) prov
 
 **From source:**
 
-1. Clone the repo into your plugins directory.
-2. Run `dev/install.ps1` (Windows). Linux/macOS scripts coming soon.
+Clone:
+
+```Shell
+git clone https://github.com/noobexon1/binjaXfrida.git
+cd binjaXfrida
+```
+Windows:
+
+```powershell
+.\dev\install.ps1
+```
+
+Linux:
+
+```Shell
+./dev/install.sh
+```
 
 ## 🚀 Usage
 
