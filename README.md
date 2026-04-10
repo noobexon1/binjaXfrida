@@ -33,7 +33,7 @@
 Right-click in Binary Ninja to generate ready-to-use Frida snippets.
 
 - 🧩 **Composable scripts** — snippets are independent but can be nested to build complex instrumentation with a few clicks
-- 🎯 **Context-aware** — scripts auto-fill module name, function address, and other details from your current Binja context
+- 🎯 **Context-aware** — scripts can auto-fill module name, function address, and really any other details that can be aquired from your current Binja context
 - 📋 **Clipboard integration** — generated scripts are instantly copied to your clipboard
 
 ### Supported Actions
@@ -43,7 +43,7 @@ Right-click in Binary Ninja to generate ready-to-use Frida snippets.
 | Action | Description |
 |---|---|
 | Generate function hook | Intercept calls to the selected function, log entry/exit |
-| Generate dlopen hooks | Monitor `dlopen` to detect module loading |
+| Generate dlopen hooks | Monitor `dlopen` (including Android variants) to detect module loading |
 
 #### 🧠 Memory
 
@@ -70,7 +70,7 @@ Each feature follows a simple pipeline: a **Frida template** (`templates/`) prov
     ```python
     binaryninja.user_plugin_path()
     ```
-2. Download the latest [release](https://github.com/noobexon1/binjaXfrida/releases) and extract into that directory.
+2. Download the latest [release](https://github.com/noobexon1/binjaXfrida/releases) and extract into the plugins directory.
 3. Restart Binary Ninja.
 
 **From source:**
