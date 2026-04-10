@@ -21,7 +21,7 @@
         });
     } 
 
-    const dlopenFunctions = ["dlopen", "dlopen_ext", "android_dlopen_ext"];
+    const dlopenFunctions = ["dlopen", "android_dlopen_ext"];
     for (let i = 0; i < dlopenFunctions.length; i++) {
         const address = Module.getGlobalExportByName(dlopenFunctions[i]);
         if (address != null) {
