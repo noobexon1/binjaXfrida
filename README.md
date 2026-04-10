@@ -9,6 +9,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub release](https://img.shields.io/github/v/release/noobexon1/binjaXfrida)](https://github.com/noobexon1/binjaXfrida/releases)
 [![GitHub stars](https://img.shields.io/github/stars/noobexon1/binjaXfrida)](https://github.com/noobexon1/binjaXfrida/stargazers)
+[![GitHub last commit](https://img.shields.io/github/last-commit/noobexon1/binjaXfrida)](https://github.com/noobexon1/binjaXfrida/commits)
+[![GitHub issues](https://img.shields.io/github/issues/noobexon1/binjaXfrida)](https://github.com/noobexon1/binjaXfrida/issues)
+[![GitHub downloads](https://img.shields.io/github/downloads/noobexon1/binjaXfrida/total)](https://github.com/noobexon1/binjaXfrida/releases)
+[![Release](https://img.shields.io/github/actions/workflow/status/noobexon1/binjaXfrida/release.yml?label=release)](https://github.com/noobexon1/binjaXfrida/actions/workflows/release.yml)
+![Binary Ninja](https://img.shields.io/badge/Binary%20Ninja-Plugin-orange)
+![Frida](https://img.shields.io/badge/Frida-Instrumentation-red)
 
 </div>
 
