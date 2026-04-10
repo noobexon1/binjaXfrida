@@ -77,7 +77,8 @@ This modular design allows for easy addition of new features by creating a new t
     binaryninja.user_plugin_path()
     ```
 2.  **Copy the Plugin:**
-    *   Copy the entire `binjaXfrida` directory (the one containing `binjaXfrida.py`, the `actions/` folder, etc.) into your Binary Ninja Pro plugins directory. Alternatively, download and unzip the latest release from https://github.com/noobexon1/binjaXfrida/releases into you plugins directory.
+    *   Download and unzip the latest [release](https://github.com/noobexon1/binjaXfrida/releases) into you plugins directory.
+
 3.  **Restart Binary Ninja.** The plugin should be loaded automatically. You will see messages from `[binjaXfrida]` in the Binary Ninja Output window if it loads correctly.
 
 ## Usage
@@ -85,7 +86,7 @@ This modular design allows for easy addition of new features by creating a new t
 1.  Open your target binary in Binary Ninja.
 2.  Navigate to a function, instruction, or area of interest in the Disassembly, Pseudocode, or Functions view.
 3.  **Right-click** to open the context menu.
-4.  Hover over the **`binjaXfrida`** menu item.
+4.  Hover over `plugins` -> `binjaXfrida`.
 5.  Select the desired category (e.g., `Hooks`, `Memory`, `Patching`).
 6.  Click on the specific script generation action you want to perform.
 7.  The generated Frida script will be printed to the Binja Output window and automatically **copied to your clipboard**.
