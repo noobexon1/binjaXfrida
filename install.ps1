@@ -47,11 +47,11 @@ if (-not (Test-Path $BinjaPluginsDir)) {
 $items = @(
     "__init__.py",
     "log.py",
-    "plugin.py",
     "plugin.json",
     "LICENSE",
+    "core",
     "actions",
-    "generators",
+    "ui",
     "templates"
 )
 

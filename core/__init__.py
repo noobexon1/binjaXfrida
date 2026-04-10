@@ -24,7 +24,7 @@ either one raises :class:`TypeError` immediately.
 
 from collections.abc import Mapping
 
-from binjaXfrida.generators.generators_utils import fill_template, read_template
+from binjaXfrida.core.utils import fill_template, read_template
 from binjaXfrida.log import log_info
 
 
@@ -64,3 +64,25 @@ class SnippetGenerator:
         )
         template = read_template(self.template_filename)
         return fill_template(template, placeholders)
+
+
+from binjaXfrida.core.hook_dlopen_functions import DlopenHookGenerator
+from binjaXfrida.core.hook_function import FunctionHookGenerator
+from binjaXfrida.core.modify_section_protection import (
+    ModifySectionProtectionGenerator,
+)
+from binjaXfrida.core.negate_cond_branch_arm64 import (
+    NegateArm64CondBranchGenerator,
+)
+from binjaXfrida.core.negate_cond_branch_x86 import (
+    NegateX86CondBranchGenerator,
+)
+
+__all__ = [
+    "SnippetGenerator",
+    "DlopenHookGenerator",
+    "FunctionHookGenerator",
+    "ModifySectionProtectionGenerator",
+    "NegateArm64CondBranchGenerator",
+    "NegateX86CondBranchGenerator",
+]

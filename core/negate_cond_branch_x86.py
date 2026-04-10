@@ -1,15 +1,15 @@
-"""Generator for Frida ARM64 conditional branch negation snippets."""
+"""Generator for Frida x86 conditional branch negation snippets."""
 
-from binjaXfrida.generators.generator_framework import SnippetGenerator
+from binjaXfrida.core import SnippetGenerator
 
 
-class NegateArm64CondBranchGenerator(SnippetGenerator):
-    """Generate a Frida script that negates an ARM64 conditional branch."""
+class NegateX86CondBranchGenerator(SnippetGenerator):
+    """Generate a Frida script that negates an x86 conditional branch."""
 
-    template_filename = "negate_cond_branch_arm64.js"
+    template_filename = "negate_cond_branch_x86.js"
 
     def generate(self, module_name: str, relative_address: str) -> str:
-        """Generate a Frida script that negates an ARM64 conditional branch.
+        """Generate a Frida script that negates an x86 conditional branch.
 
         :param module_name: The target module's file name.
         :param relative_address: The instruction's offset from the module

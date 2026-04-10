@@ -1,1 +1,168 @@
-"""Binary Ninja plugin actions for binjaXfrida."""
+"""Action framework for registering binjaXfrida commands in Binary Ninja.
+
+Every action **must** subclass one of the base action classes
+(:class:`Action`, :class:`AddressAction`, or :class:`FunctionAction`)
+and:
+
+1. Set the ``description`` class attribute to a non-empty string that
+   will appear in Binary Ninja's plugin menu.
+2. Override ``execute()`` with the action's logic.
+
+Both constraints are validated at class-creation time; forgetting
+either one raises :class:`TypeError` immediately.
+"""
+
+from typing import Optional
+
+from binaryninja import BinaryView, Function, PluginCommand
+
+from binjaXfrida.log import log_info, log_warn
+
+
+PLUGIN_MENU = "binjaXfrida"
+
+
+class Action:
+    """Base action that operates on a BinaryView.
+
+    Subclass this for commands that only need access to the
+    full binary view (e.g. module-level operations).
+    """
+
+    description: str = ""
+    category_name: Optional[str] = None
+
+    def __init_subclass__(cls, **kwargs: object) -> None:
+        super().__init_subclass__(**kwargs)
+
+        if cls.__module__ == __name__:
+            return
+
+        if not getattr(cls, "description", None):
+            raise TypeError(
+                f"{cls.__name__} must define a non-empty 'description'."
+            )
+
+        if "execute" not in cls.__dict__:
+            raise TypeError(
+                f"{cls.__name__} must implement 'execute()'."
+            )
+
+    @property
+    def name(self) -> str:
+        """Return a unique identifier for this action.
+
+        :return: A string in the form ``binjaXfrida:<ClassName>``.
+        """
+        return f"binjaXfrida:{type(self).__name__}"
+
+    @property
+    def menu_path(self) -> str:
+        """Return the full backslash-separated menu path for PluginCommand.
+
+        :return: Menu path including plugin name, optional category,
+            and description.
+        """
+        if self.category_name:
+            return f"{PLUGIN_MENU}\\{self.category_name}\\{self.description}"
+        return f"{PLUGIN_MENU}\\{self.description}"
+
+    def execute(self, bv: BinaryView) -> None:
+        """Execute the action.
+
+        :param bv: The current Binary Ninja BinaryView.
+        :raises NotImplementedError: Must be overridden by subclasses.
+        """
+        raise NotImplementedError
+
+
+class AddressAction(Action):
+    """Action that operates on a BinaryView and a specific address.
+
+    Registered via ``PluginCommand.register_for_address`` so Binary
+    Ninja provides the selected address automatically.
+    """
+
+    def execute(self, bv: BinaryView, addr: int) -> None:  # type: ignore[override]
+        """Execute the action at a specific address.
+
+        :param bv: The current Binary Ninja BinaryView.
+        :param addr: The currently selected address.
+        :raises NotImplementedError: Must be overridden by subclasses.
+        """
+        raise NotImplementedError
+
+
+class FunctionAction(Action):
+    """Action that operates on a BinaryView and a specific function.
+
+    Registered via ``PluginCommand.register_for_function`` so Binary
+    Ninja provides the selected function automatically.
+    """
+
+    def execute(  # type: ignore[override]
+        self, bv: BinaryView, func: Function,
+    ) -> None:
+        """Execute the action for a specific function.
+
+        :param bv: The current Binary Ninja BinaryView.
+        :param func: The currently selected function.
+        :raises NotImplementedError: Must be overridden by subclasses.
+        """
+        raise NotImplementedError
+
+
+class ActionManager:
+    """Registers Action instances as Binary Ninja PluginCommands.
+
+    Routes each action to the appropriate ``PluginCommand.register*``
+    variant based on whether it is a base Action, AddressAction,
+    or FunctionAction.
+    """
+
+    def __init__(self) -> None:
+        self._actions: list[Action] = []
+
+    def register(self, action: Action) -> None:
+        """Register an action as a Binary Ninja PluginCommand.
+
+        :param action: The action instance to register.
+        """
+        if any(a.name == action.name for a in self._actions):
+            log_warn(
+                f"Warning: Action "
+                f"'{action.name}' already registered. Skipping."
+            )
+            return
+
+        self._actions.append(action)
+
+        if isinstance(action, FunctionAction):
+            PluginCommand.register_for_function(
+                action.menu_path,
+                action.description,
+                lambda bv, func, a=action: a.execute(bv, func),
+            )
+        elif isinstance(action, AddressAction):
+            PluginCommand.register_for_address(
+                action.menu_path,
+                action.description,
+                lambda bv, addr, a=action: a.execute(bv, addr),
+            )
+        else:
+            PluginCommand.register(
+                action.menu_path,
+                action.description,
+                lambda bv, a=action: a.execute(bv),
+            )
+
+        log_info(f"Action '{action.name}' registered.")
+
+    def finalize(self) -> None:
+        """Clear internal action tracking.
+
+        Binary Ninja commands persist for the session; this only
+        resets the manager's internal list.
+        """
+        log_info("Finalizing actions...")
+        self._actions.clear()

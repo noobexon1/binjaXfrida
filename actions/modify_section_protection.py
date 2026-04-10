@@ -2,12 +2,13 @@
 
 from binaryninja import BinaryView
 
-from binjaXfrida.actions.action_framework import AddressAction
-from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
-from binjaXfrida.generators.modify_section_protection_gen import (
+from binjaXfrida.actions import AddressAction
+from binjaXfrida.actions.utils import get_module_name
+from binjaXfrida.core.modify_section_protection import (
     ModifySectionProtectionGenerator,
 )
 from binjaXfrida.log import log_warn
+from binjaXfrida.ui.clipboard import copy_to_clipboard
 
 
 class ModifySectionProtection(AddressAction):

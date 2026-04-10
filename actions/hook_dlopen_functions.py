@@ -2,10 +2,11 @@
 
 from binaryninja import BinaryView
 
-from binjaXfrida.actions.action_framework import Action
-from binjaXfrida.actions.action_utils import copy_to_clipboard, get_module_name
-from binjaXfrida.generators.hook_dlopen_functions_gen import DlopenHookGenerator
+from binjaXfrida.actions import Action
+from binjaXfrida.actions.utils import get_module_name
+from binjaXfrida.core.hook_dlopen_functions import DlopenHookGenerator
 from binjaXfrida.log import log_warn
+from binjaXfrida.ui.clipboard import copy_to_clipboard
 
 
 class GenerateDlopenHooks(Action):

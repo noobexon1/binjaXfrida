@@ -2,14 +2,14 @@
 
 from binaryninja import BinaryView, Function
 
-from binjaXfrida.actions.action_framework import FunctionAction
-from binjaXfrida.actions.action_utils import (
-    copy_to_clipboard,
+from binjaXfrida.actions import FunctionAction
+from binjaXfrida.actions.utils import (
     get_function_name,
     get_module_name,
     get_relative_address,
 )
-from binjaXfrida.generators.hook_function_gen import FunctionHookGenerator
+from binjaXfrida.core.hook_function import FunctionHookGenerator
+from binjaXfrida.ui.clipboard import copy_to_clipboard
 
 
 class GenerateFunctionHook(FunctionAction):

@@ -1,6 +1,6 @@
 """Generator for Frida function hook snippets."""
 
-from binjaXfrida.generators.generator_framework import SnippetGenerator
+from binjaXfrida.core import SnippetGenerator
 
 
 class FunctionHookGenerator(SnippetGenerator):

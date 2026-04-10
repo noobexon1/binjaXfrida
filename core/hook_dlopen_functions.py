@@ -1,6 +1,6 @@
 """Generator for Frida dlopen hook snippets."""
 
-from binjaXfrida.generators.generator_framework import SnippetGenerator
+from binjaXfrida.core import SnippetGenerator
 
 
 class DlopenHookGenerator(SnippetGenerator):

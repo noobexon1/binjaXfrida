@@ -2,16 +2,16 @@
 
 from binaryninja import BinaryView
 
-from binjaXfrida.actions.action_framework import AddressAction
-from binjaXfrida.actions.action_utils import (
-    copy_to_clipboard,
+from binjaXfrida.actions import AddressAction
+from binjaXfrida.actions.utils import (
     get_module_name,
     get_relative_address,
 )
-from binjaXfrida.generators.negate_cond_branch_arm64_gen import (
+from binjaXfrida.core.negate_cond_branch_arm64 import (
     NegateArm64CondBranchGenerator,
 )
 from binjaXfrida.log import log_warn
+from binjaXfrida.ui.clipboard import copy_to_clipboard
 
 
 class NegateArm64CondBranch(AddressAction):

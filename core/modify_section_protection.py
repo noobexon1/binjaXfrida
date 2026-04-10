@@ -1,6 +1,6 @@
 """Generator for Frida section protection modification snippets."""
 
-from binjaXfrida.generators.generator_framework import SnippetGenerator
+from binjaXfrida.core import SnippetGenerator
 
 
 class ModifySectionProtectionGenerator(SnippetGenerator):
