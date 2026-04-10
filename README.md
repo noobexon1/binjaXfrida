@@ -1,9 +1,12 @@
 <!-- PROJECT LOGO -->
 <br />
+<div align="center">
 
 <img src="assets/logo.jpg" alt="binjaXfrida logo" width="400" />
 
 # binjaXfrida: Binary Ninja <-> Frida
+
+</div>
 
 `binjaXfrida` is a Binary Ninja plugin designed to bridge the gap between static analysis in Binary Ninja and dynamic analysis with Frida. It allows users to quickly generate Frida JavaScript snippets based on the current context in Binary Ninja (e.g., selected function, instruction, or module details) to aid in reverse engineering and dynamic instrumentation tasks.
 
