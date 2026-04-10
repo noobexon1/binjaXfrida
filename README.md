@@ -15,11 +15,11 @@
 ### Generate a function hook:
 
 <div align="center">
-    <img src="assets/image1.png" alt="plugin_showcase" width="1024"/>
+    <img src="assets/image_1.png" alt="plugin_showcase" width="1024"/>
 </div>
 
 <div align="center">
-    <img src="assets/image2.png" alt="generated" width="1024" />
+    <img src="assets/image_2.png" alt="generated" width="1024" />
 </div>
 
 ### Generate a scripts to negate conditional branch on AArch64:
