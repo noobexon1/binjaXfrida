@@ -14,10 +14,13 @@
 
 ### Generate a function hook:
 
+- One click:
+
 <div align="center">
     <img src="assets/image_1.png" alt="plugin_showcase" width="1024"/>
 </div>
 
+- Result
 
 <div align="center">
     <img src="assets/image_2.png" alt="generated" width="1024" />
