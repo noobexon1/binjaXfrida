@@ -1,6 +1,5 @@
 <!-- PROJECT LOGO -->
 <br />
-<div align="center">
 
 <img src="assets/logo.jpg" alt="binjaXfrida logo" width="400" />
 
