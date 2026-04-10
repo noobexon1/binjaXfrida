@@ -65,10 +65,20 @@ jobs:
           git tag "$TAG"
           git push origin HEAD "$TAG"
 
+      - name: Build release artifact
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          mkdir -p binjaXfrida
+          cp -r __init__.py log.py plugin.json LICENSE core actions ui templates binjaXfrida/
+          find binjaXfrida -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+          zip -r "binjaXfrida_${VERSION}.zip" binjaXfrida
+
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          VERSION="${{ steps.version.outputs.version }}"
           gh release create "${{ steps.version.outputs.tag }}" \
+            "binjaXfrida_${VERSION}.zip" \
             --title "${{ steps.version.outputs.tag }}" \
             --generate-notes
