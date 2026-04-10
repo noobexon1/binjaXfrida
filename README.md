@@ -81,13 +81,13 @@ Clone:
 git clone https://github.com/noobexon1/binjaXfrida.git
 cd binjaXfrida
 ```
-Windows:
+🪟 Windows:
 
 ```powershell
 .\dev\install.ps1
 ```
 
-Linux:
+🐧 Linux:
 
 ```Shell
 ./dev/install.sh
