@@ -20,7 +20,7 @@
     <img src="assets/image_1.png" alt="plugin_showcase" width="1024"/>
 </div>
 
-- Result
+- Result:
 
 <div align="center">
     <img src="assets/image_2.png" alt="generated" width="1024" />
@@ -28,12 +28,16 @@
 
 ### Generate a scripts to negate conditional branch on AArch64:
 
-<div align="center">
-    <img src="assets/image3.png" alt="plugin_showcase" width="1024"/>
-</div>
+- One click:
 
 <div align="center">
-    <img src="assets/image4.png" alt="generated" width="1024" />
+    <img src="assets/image_3.png" alt="plugin_showcase" width="1024"/>
+</div>
+
+- Result:
+
+<div align="center">
+    <img src="assets/image_4.png" alt="generated" width="1024" />
 </div>
 
 

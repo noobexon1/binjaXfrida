@@ -10,7 +10,18 @@
         console.log(`\tbefore: ${Instruction.parse(targetAddr)}`);
         Memory.patchCode(targetAddr, 4, code => {
             const raw = targetAddr.readU32();
-            code.writeU32(raw ^ 1); // XOR with 1 in AArch64 negates conditional branching.
+            let xorMask;
+            if ((raw & 0xFF000010) === 0x54000000) {
+                xorMask = 1;            // b.cond: condition in bit 0
+            } else if ((raw & 0x7E000000) === 0x36000000) {
+                xorMask = 1 << 24;     // tbz/tbnz: op in bit 24
+            } else if ((raw & 0x7E000000) === 0x34000000) {
+                xorMask = 1 << 24;     // cbz/cbnz: op in bit 24
+            } else {
+                console.log("[!] Unrecognized conditional branch encoding");
+                return;
+            }
+            code.writeU32(raw ^ xorMask);
         });
         console.log(`\tafter: ${Instruction.parse(targetAddr)}`);
     } else {

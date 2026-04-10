@@ -24,7 +24,8 @@ class NegateArm64CondBranch(AddressAction):
         "b.eq", "b.ne", "b.hs", "b.lo", "b.cs",
         "b.mi", "b.pl", "b.vs", "b.vc",
         "b.hi", "b.ls", "b.ge", "b.lt",
-        "b.gt", "b.le",
+        "b.gt", "b.le", "tbz", "tbnz",
+        "cbz", "cbnz",
     }
 
     @staticmethod
