@@ -4,7 +4,7 @@
 
 # binjaXfrida
 
-**Generate Frida scripts directly from Binary Ninja.**
+**Generate Frida scripts directly from Binary Ninja.** ⚡
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub release](https://img.shields.io/github/v/release/noobexon1/binjaXfrida)](https://github.com/noobexon1/binjaXfrida/releases)
@@ -12,7 +12,7 @@
 
 </div>
 
-**Function Hook**
+**🎣 Function Hook**
 <table>
   <tr>
     <td width="50%"><img src="assets/image_1.png" width="100%"></td>
@@ -20,7 +20,7 @@
   </tr>
 </table>
 
-**Negate Conditional Branch**
+**🔀 Negate Conditional Branch**
 <table>
   <tr>
     <td width="50%"><img src="assets/image_3.png" width="100%"></td>
@@ -28,41 +28,41 @@
   </tr>
 </table>
 
-## Features
+## ✨ Features
 
 Right-click in Binary Ninja to generate ready-to-use Frida snippets.
 
-- **Composable scripts** — snippets are independent but can be nested to build complex instrumentation with a few clicks
-- **Context-aware** — scripts auto-fill module name, function address, and other details from your current Binja context
-- **Clipboard integration** — generated scripts are instantly copied to your clipboard
+- 🧩 **Composable scripts** — snippets are independent but can be nested to build complex instrumentation with a few clicks
+- 🎯 **Context-aware** — scripts auto-fill module name, function address, and other details from your current Binja context
+- 📋 **Clipboard integration** — generated scripts are instantly copied to your clipboard
 
 ### Supported Actions
 
-#### Hooks
+#### 🪝 Hooks
 
 | Action | Description |
 |---|---|
 | Generate function hook | Intercept calls to the selected function, log entry/exit |
 | Generate dlopen hooks | Monitor `dlopen` to detect module loading |
 
-#### Memory
+#### 🧠 Memory
 
 | Action | Description |
 |---|---|
 | Modify section protection | Change memory protection of the section at the current address |
 
-#### Patching
+#### 🩹 Patching
 
 | Action | Description |
 |---|---|
 | Negate cond branch (ARM64) | Flip the condition of an ARM64 conditional branch |
 | Negate cond branch (x86/x64) | Flip the condition of an x86/x64 conditional branch |
 
-## How it Works
+## 🔧 How it Works
 
 Each feature follows a simple pipeline: a **Frida template** (`templates/`) provides the JavaScript skeleton with placeholders, an **action** (`actions/`) gathers context from Binary Ninja (function name, address, module), and a **generator** (`core/`) fills the template to produce the final script. UI concerns like clipboard live in `ui/`.
 
-## Installation
+## 📦 Installation
 
 **From release:**
 
@@ -78,7 +78,7 @@ Each feature follows a simple pipeline: a **Frida template** (`templates/`) prov
 1. Clone the repo into your plugins directory.
 2. Run `dev/install.ps1` (Windows). Linux/macOS scripts coming soon.
 
-## Usage
+## 🚀 Usage
 
 1. Open your target binary in Binary Ninja.
 2. Right-click in the Disassembly, Pseudocode, or Functions view.
@@ -86,11 +86,11 @@ Each feature follows a simple pipeline: a **Frida template** (`templates/`) prov
 4. The generated Frida script is printed to the Output window and copied to your clipboard.
 5. Paste into your Frida CLI, agent, or `.js` file.
 
-### Script Composition
+### 🧱 Script Composition
 
 Snippets are designed to be independent building blocks. You can nest scripts inside each other — for example, hook a function, negate a conditional branch on entry, and restore it on exit. Complex instrumentation from a few clicks.
 
-## Contributing
+## 🤝 Contributing
 
 Contributions welcome! Got a useful Frida snippet? Turn it into a template so everyone can use it.
 
@@ -108,10 +108,10 @@ JS templates must be wrapped in a self-invoking function so they remain composab
 
 Each action and generator lives in its own file — easy to contribute without merge conflicts.
 
-## Roadmap
+## 🗺️ Roadmap
 
 See [open issues](https://github.com/noobexon1/binjaXfrida/issues) for planned features and known bugs.
 
-## License
+## 📄 License
 
 [MIT](LICENSE)
