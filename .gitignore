@@ -8,3 +8,4 @@ package.json
 .cursor
 pyproject.toml
 pyrightconfig.json
+docs/superpowers/
