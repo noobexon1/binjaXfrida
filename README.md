@@ -16,29 +16,29 @@
 
 - One click:
 
-<div align="center">
-    <img src="assets/image_1.png" alt="plugin_showcase" width="1024"/>
-</div>
+<a href="assets/image_1.png" target="_blank">
+  <img src="assets/image_1.png" width="100%">
+</a>
 
 - Result:
 
-<div align="center">
-    <img src="assets/image_2.png" alt="generated" width="1024" />
-</div>
+<a href="assets/image_2.png" target="_blank">
+  <img src="assets/image_2.png" width="100%">
+</a>
 
 ### Generate a scripts to negate conditional branch on AArch64:
 
 - One click:
 
-<div align="center">
-    <img src="assets/image_3.png" alt="plugin_showcase" width="1024"/>
-</div>
+<a href="assets/image_3.png" target="_blank">
+  <img src="assets/image_3.png" width="100%">
+</a>
 
 - Result:
 
-<div align="center">
-    <img src="assets/image_4.png" alt="generated" width="1024" />
-</div>
+<a href="assets/image_4.png" target="_blank">
+  <img src="assets/image_4.png" width="100%">
+</a>
 
 
 ## Features
