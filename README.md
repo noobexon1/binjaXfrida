@@ -6,7 +6,6 @@
 
 **Generate Frida scripts directly from Binary Ninja.** ⚡
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub release](https://img.shields.io/github/v/release/noobexon1/binjaXfrida)](https://github.com/noobexon1/binjaXfrida/releases)
 [![GitHub stars](https://img.shields.io/github/stars/noobexon1/binjaXfrida)](https://github.com/noobexon1/binjaXfrida/stargazers)
 [![GitHub last commit](https://img.shields.io/github/last-commit/noobexon1/binjaXfrida)](https://github.com/noobexon1/binjaXfrida/commits)
