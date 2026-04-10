@@ -57,15 +57,16 @@
         *   `Negate cond branch instruction (ARM64)`: Generates a script to flip the condition of an ARM64 conditional branch instruction.
         *   `Negate cond branch instruction (x86/x64)`: Generates a script to flip the condition of an x86/x64 conditional branch instruction.
 *   **Clipboard Integration:** Generated scripts are automatically copied to the clipboard.
-*   **Extensible Framework:** Designed with a clear separation of concerns (actions, generators, templates) making it easy to add new Frida script generation capabilities.
+*   **Extensible Framework:** Designed with a clear separation of concerns (`actions/`, `core/`, `templates/`, `ui/`) making it easy to add new Frida script generation capabilities.
 
 ## How it Works
 
 The plugin operates on a simple three-part system for each feature:
 
-1.  **Frida Templates (`templates/`):** These are pre-defined Frida JavaScript files with placeholders (e.g., for module name, function address).
-2.  **Binja Actions (`actions/`):** Python classes that interface with the Binary Ninja API. They gather the necessary data from the current Binja context (e.g., function name, address under cursor), perform error handling, and then invoke a `generator`.
-3.  **Script Generators (`generators/`):** Generators are Python modules that take the data from an `Action` and populate the corresponding Frida `Template`, producing the final script.
+1.  **Frida Templates (`templates/`):** Pre-defined Frida JavaScript files with placeholders (e.g., for module name, function address).
+2.  **Binja Actions (`actions/`):** Python classes that interface with the Binary Ninja API. They gather the necessary data from the current Binja context (e.g., function name, address under cursor), perform error handling, and then invoke a generator.
+3.  **Snippet Generators (`core/`):** Python modules that take the data from an action and populate the corresponding Frida template, producing the final script.
+4.  **UI (`ui/`):** Qt/PySide6 components such as clipboard integration. Kept separate from action logic.
 
 This modular design allows for easy addition of new features by creating a new template, an action to gather data, and a generator to combine them.
 
@@ -103,8 +104,12 @@ Contributions are welcome! If you have ideas for new Frida snippets, improvement
 3.  Make your changes.
 4.  Submit a pull request.
 
-Please try to follow the existing code structure (templates, actions, generators) when adding new features.
-In the future, I will create a wiki with information on how to setup a comfortable development environement, but for now just go with the flow.
+Please try to follow the existing code structure when adding new features:
+
+*   **New snippet?** Add a `.js` template in `templates/`, a generator class in `core/`, and an action class in `actions/`.
+*   **New UI element?** Add it under `ui/`.
+
+Each action and generator lives in its own file for easy contribution without merge conflicts.
 
 ## Future Enhancements (Ideas)
 
