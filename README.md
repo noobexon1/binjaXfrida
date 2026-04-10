@@ -4,7 +4,7 @@
 
 <img src="assets/logo.jpg" alt="binjaXfrida logo" width="400" />
 
-# binjaXfrida: Binary Ninja <-> Frida
+## binjaXfrida: Binary Ninja <-> Frida
 
 </div>
 
@@ -64,25 +64,21 @@
 The plugin operates on a simple three-part system for each feature:
 
 1.  **Frida Templates (`templates/`):** These are pre-defined Frida JavaScript files with placeholders (e.g., for module name, function address).
-2.  **Binja Actions (`actions/`):** Python classes that interface with the Binary Ninja API. They gather the necessary data from the current Binja context (e.g., function name, address under cursor), perform error handling, and then invoke a generator.
-3.  **Script Generators (`generators/`):** Python modules that take the data from an Action and populate the corresponding Frida Template, producing the final script.
+2.  **Binja Actions (`actions/`):** Python classes that interface with the Binary Ninja API. They gather the necessary data from the current Binja context (e.g., function name, address under cursor), perform error handling, and then invoke a `generator`.
+3.  **Script Generators (`generators/`):** Generators are Python modules that take the data from an `Action` and populate the corresponding Frida `Template`, producing the final script.
 
 This modular design allows for easy addition of new features by creating a new template, an action to gather data, and a generator to combine them.
 
 ## Installation
 
-1.  **Prerequisites:**
-    *   Binary Ninja with plugins support.
-    *   Frida installed and set up on your target system/device.
-2.  **Locate your Binary Ninja plugins directory.**
-    *   You can find this in Binary Ninja via the Plugin Manager, or by checking the `User Folder` path under `Settings` -> `Paths`.
-    *   Common paths:
-        *   Windows: `%APPDATA%\Binary Ninja\plugins`
-        *   Linux: `~/.binaryninja/plugins`
-        *   macOS: `~/Library/Application Support/Binary Ninja/plugins`
-3.  **Copy the Plugin:**
+1.  **Locate your Binary Ninja plugins directory.**
+    *   Run the following command in the Binary Ninja Python console:
+    ```python
+    binaryninja.user_plugin_path()
+    ```
+2.  **Copy the Plugin:**
     *   Copy the entire `binjaXfrida` directory (the one containing `binjaXfrida.py`, the `actions/` folder, etc.) into your Binary Ninja Pro plugins directory. Alternatively, download and unzip the latest release from https://github.com/noobexon1/binjaXfrida/releases into you plugins directory.
-4.  **Restart Binary Ninja.** The plugin should be loaded automatically. You will see messages from `[binjaXfrida]` in the Binary Ninja Output window if it loads correctly.
+3.  **Restart Binary Ninja.** The plugin should be loaded automatically. You will see messages from `[binjaXfrida]` in the Binary Ninja Output window if it loads correctly.
 
 ## Usage
 
