@@ -15,6 +15,9 @@
 [![Release](https://img.shields.io/github/actions/workflow/status/noobexon1/binjaXfrida/release.yml?label=release)](https://github.com/noobexon1/binjaXfrida/actions/workflows/release.yml)
 ![Binary Ninja](https://img.shields.io/badge/Binary%20Ninja-Plugin-orange)
 ![Frida](https://img.shields.io/badge/Frida-Instrumentation-red)
+[![GitHub Release Date](https://img.shields.io/github/release-date/noobexon1/binjaXfrida)](https://github.com/noobexon1/binjaXfrida/releases)
+[![GitHub Created At](https://img.shields.io/github/created-at/noobexon1/binjaXfrida)](https://github.com/noobexon1/binjaXfrida)
+[![GitHub License](https://img.shields.io/github/license/noobexon1/binjaXfrida)](LICENSE)
 
 </div>
 
