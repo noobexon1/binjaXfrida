@@ -26,7 +26,7 @@ function Abort([string]$Message) {
 }
 
 # --- Resolve paths ---
-$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$ScriptDir = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Definition)
 $PluginName = "binjaXfrida"
 $TargetDir = Join-Path $BinjaPluginsDir $PluginName
 
